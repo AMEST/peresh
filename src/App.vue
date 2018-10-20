@@ -1,17 +1,19 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" v-bind:class="[$bgStyle, $textStyle]">
+    <tracker v-if="$isAppStarted"/>
+    <welcome v-else v-bind:msg="$Lang.welcomeMessage"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Welcome from './components/Welcome.vue'
+import Tracker from './components/Tracker.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Welcome,
+    Tracker
   }
 }
 </script>
@@ -21,8 +23,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  overflow: hidden;
 }
 </style>
