@@ -1,6 +1,15 @@
 {
-    "welcomeMessage": "Welcome to ",
+    "fullAppName":"Personalis rebus Scheduler",
+    "welcomeMessage": "Organize your affairs with ",
     "buttonGetStartedLocal": "Get started local",
     "localProfileSmall":"Local profile, all app data save only in you browser",
-    "or":"Or"
+    "or":"Or",
+    "lang":"Language",
+    "russian":"Russian",
+    "english":"English",
+    "lightTheme":"Set Light",
+    "darkTheme": "Set Dark",
+    "themeTumbler":"Switch theme",
+    "localProfile":"Local profile",
+    "createTask":"Create task"
 }

@@ -4,11 +4,18 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import langRu from './assets/lang_ru.json'
 import langEng from './assets/lang_en.json'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCoffee, faSun, faMoon, faCube, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+ 
 /*
 *
 * Configuration init
 *
 */
+library.add(faCoffee, faSun, faMoon, faCube, faPlus)
+ 
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 if(localStorage.lang == "ru"){
   var lang = langRu;
@@ -21,7 +28,7 @@ if((localStorage.bgStyle == undefined) || (localStorage.bgStyle == "undefined"))
 let globalData = new Vue({
   data: { 
     $bgStyle: localStorage.bgStyle,
-    $AppName: "Shedule You Do"
+    $AppName: "Peresh"
   }
 });
 Vue.mixin({
@@ -44,6 +51,7 @@ Vue.mixin({
 * Application Init
 *
 */
+// eslint-disable-next-line
 let app = new Vue({
   render: h => h(App)
 }).$mount('#app')
