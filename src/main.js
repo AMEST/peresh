@@ -28,7 +28,8 @@ if((localStorage.bgStyle == undefined) || (localStorage.bgStyle == "undefined"))
 let globalData = new Vue({
   data: { 
     $bgStyle: localStorage.bgStyle,
-    $AppName: "Peresh"
+    $AppName: "Peresh",
+    $isAppStarted: ((localStorage.isAppStarted == "undefined")||(localStorage.isAppStarted == undefined)?false:localStorage.isAppStarted)
   }
 });
 Vue.mixin({
@@ -41,8 +42,8 @@ Vue.mixin({
     $AppName:{ get: function(){return globalData.$data.$AppName}},
     $Lang:{ get: function(){return lang}},
     $isAppStarted:{ 
-      get: function(){return ((localStorage.isAppStarted == "undefined")||(localStorage.isAppStarted == undefined)?false:localStorage.isAppStarted)},
-      set: function(newValue){localStorage.isAppStarted = newValue;}
+      get: function(){return globalData.$data.$isAppStarted},
+      set: function(newValue){globalData.$data.$isAppStarted=newValue; localStorage.isAppStarted = newValue;}
     }
   }
 })
