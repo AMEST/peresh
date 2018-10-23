@@ -3,11 +3,17 @@
         <top-menu/>
         <div class="container-fluid h-100 mx-auto max-fluid-container-width">
             <div class="row h-100"> 
-                <div class="d-none d-sm-none d-md-none d-lg-block col w-25 inrow-menu pt-4">
-                    menu
+                <div class="d-none d-sm-none d-md-none d-lg-block col w-25 inrow-menu pt-4 pr-0">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action" v-for="item in getMenu()" :key="item" v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item': 'light-item']">
+                            <font-awesome-icon v-bind:icon="item.icon" /><span class="pl-1"> {{ item.text }}</span>
+                        </a>
+                    </div>
                 </div>
                 <div class="col work-shadow pt-4">
                     work
+                    <span v-for="gi in getItems()" :key="gi">{{ gi }}</span>
+                    <a href="#" v-on:click="test">test</a>
                 </div>
             </div>
         </div>
@@ -20,6 +26,20 @@ export default {
   name: 'Tracker',
   components:{
       TopMenu
+  },
+  methods:{
+      getItems: function(event){
+          console.log('[GetItems]', 'GI');
+          return ["1","2","3",Date()];
+      },
+      test: function(event){
+          var self = this;
+          self.$forceUpdate();
+      },
+      getMenu: function(){
+          var self = this;
+          return self.$Lang.menu;
+      }
   }
 }
 </script>
@@ -42,5 +62,17 @@ export default {
     }
     .max-fluid-container-width{
         max-width: 1100px;
+    }
+    .inrow-menu .list-group .list-group-item{
+        border-radius: 5px 0 0 5px;
+        background-color: inherit;
+        color: inherit;
+        border: 0;
+    }
+    .dark-item:hover{
+        background-color: rgb(60, 67, 72) !important;
+    }
+    .light-item:hover, .light-item:active{
+        background-color: rgba(60, 67, 72, 0.1) !important;
     }
 </style>

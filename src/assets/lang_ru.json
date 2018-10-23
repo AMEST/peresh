@@ -11,5 +11,12 @@
     "darkTheme": "Включить темную тему",
     "themeTumbler":"Переключить тему",
     "localProfile":"Локальный профиль",
-    "createTask":"Создать задачу"
+    "createTask":"Создать задачу",
+    "menu":{
+        "tasksList": {"icon":"tasks","text":"Список активных задач"},
+        "tasksToday": {"icon":"calendar","text":"Задачи на сегодня"},
+        "tasksTomorrow": {"icon":"calendar-alt","text":"Задачи на завтра"},
+        "archiveTasks": {"icon":"archive","text":"Список архивных задач"},
+        "trashCan": {"icon":"trash","text":"Корзина"}
+    }
 }
