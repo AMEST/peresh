@@ -26,6 +26,7 @@ if((localStorage.bgStyle === undefined) || (localStorage.bgStyle === 'undefined'
 }
 let globalData = new Vue({
   data: { 
+    $activeMenuItem: ((sessionStorage.activeMenuItem === 'undefined')||(sessionStorage.activeMenuItem === undefined)) ? 'TrackerMain' : sessionStorage.activeMenuItem,
     $bgStyle: localStorage.bgStyle,
     $AppName: 'Peresh',
     $isAppStarted: ((localStorage.isAppStarted === 'undefined') || (localStorage.isAppStarted === undefined) ? false : localStorage.isAppStarted)
@@ -37,12 +38,16 @@ Vue.mixin({
       get: function () { return globalData.$data.$bgStyle},
       set: function (newColor) { globalData.$data.$bgStyle = newColor; localStorage.bgStyle = newColor;}
     },
-    $textStyle:{ get: function(){return (globalData.$data.$bgStyle === 'bg-dark')?'text-light':'text-dark'}},
-    $AppName:{ get: function(){return globalData.$data.$AppName}},
-    $Lang:{ get: function(){return lang}},
+    $textStyle: { get: function() { return (globalData.$data.$bgStyle === 'bg-dark') ? 'text-light' : 'text-dark' }},
+    $AppName: { get: function() { return globalData.$data.$AppName }},
+    $Lang: { get: function() { return lang }},
     $isAppStarted:{ 
-      get: function(){return globalData.$data.$isAppStarted},
-      set: function(newValue){globalData.$data.$isAppStarted=newValue; localStorage.isAppStarted = newValue;}
+      get: function() {return globalData.$data.$isAppStarted},
+      set: function(newValue) { globalData.$data.$isAppStarted=newValue; localStorage.isAppStarted = newValue; }
+    },
+    activeMenuItem: {
+      get:function() { return globalData.$data.$activeMenuItem; },
+      set: function(newValue) { globalData.$data.$activeMenuItem = newValue; sessionStorage.activeMenuItem = newValue;  }
     }
   }
 })

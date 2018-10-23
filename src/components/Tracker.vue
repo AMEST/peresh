@@ -5,7 +5,7 @@
             <div class="row h-100"> 
                 <div class="d-none d-sm-none d-md-none d-lg-block col w-25 inrow-menu pt-4 pr-0">
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action" v-for="item in getMenu()" :key="item" v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item': 'light-item']">
+                        <a href="#" class="list-group-item list-group-item-action" v-for="(item, key) in getMenu()" :key="key, item" @click="activeMenuItem = key" v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item': 'light-item']">
                             <font-awesome-icon v-bind:icon="item.icon" /><span class="pl-1"> {{ item.text }}</span>
                         </a>
                     </div>
@@ -14,6 +14,12 @@
                     work
                     <span v-for="gi in getItems()" :key="gi">{{ gi }}</span>
                     <a href="#" v-on:click="test">test</a>
+                    <div v-if="activeMenuItem == 'tasksList'"> 1 </div>
+                    <div v-else-if="activeMenuItem == 'tasksToday'"> 2 </div>
+                    <div v-else-if="activeMenuItem == 'tasksTomorrow'"> 3 </div>
+                    <div v-else-if="activeMenuItem == 'archiveTasks'"> 4 </div>
+                    <div v-else-if="activeMenuItem == 'trashCan'"> 5 </div>
+                    <div v-else> 6 </div>
                 </div>
             </div>
         </div>
@@ -39,7 +45,7 @@ export default {
       getMenu: function(){
           var self = this;
           return self.$Lang.menu;
-      }
+      },
   }
 }
 </script>
