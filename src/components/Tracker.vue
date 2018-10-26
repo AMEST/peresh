@@ -5,7 +5,7 @@
             <div class="row h-100"> 
                 <div class="d-none d-sm-none d-md-none d-lg-block col w-25 inrow-menu pt-4 pr-0">
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action" v-for="(item, key) in getMenu()" :key="key, item" @click="activeMenuItem = key" v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item': 'light-item']">
+                        <a href="#" class="list-group-item list-group-item-action" v-for="(item, key) in getMenu()" :key="key, item" @click="activeMenuItem = key" v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item': 'light-item', activeMenuItem == key ? ($bgStyle == 'bg-dark' ? 'dark-item-active' : 'light-item-active') : '']">
                             <font-awesome-icon v-bind:icon="item.icon" /><span class="pl-1"> {{ item.text }}</span>
                         </a>
                     </div>
@@ -19,7 +19,7 @@
                     <div v-else-if="activeMenuItem == 'tasksTomorrow'"> 3 </div>
                     <div v-else-if="activeMenuItem == 'archiveTasks'"> 4 </div>
                     <div v-else-if="activeMenuItem == 'trashCan'"> 5 </div>
-                    <div v-else> 6 </div>
+                    <div v-else> <defaultWorkBlock/> </div>
                 </div>
             </div>
         </div>
@@ -28,17 +28,18 @@
 
 <script>
 import TopMenu from './uiElements/TopMenu.vue'
+import defaultWorkBlock from './uiElements/defaultWorkBlock.vue'
 export default {
   name: 'Tracker',
   components:{
-      TopMenu
+      TopMenu,
+      defaultWorkBlock
   },
   methods:{
-      getItems: function(event){
-          console.log('[GetItems]', 'GI');
+      getItems: function(){
           return ["1","2","3",Date()];
       },
-      test: function(event){
+      test: function(){
           var self = this;
           self.$forceUpdate();
       },
@@ -75,10 +76,11 @@ export default {
         color: inherit;
         border: 0;
     }
-    .dark-item:hover{
+    .dark-item:hover, .dark-item-active{
         background-color: rgb(60, 67, 72) !important;
     }
-    .light-item:hover, .light-item:active{
+    .light-item:hover, .light-item:active, .light-item-active{
         background-color: rgba(60, 67, 72, 0.1) !important;
     }
+    
 </style>
