@@ -11,14 +11,15 @@
                     </div>
                 </div>
                 <div class="col work-shadow pt-4">
-                    work
+                    <!--work
                     <span v-for="gi in getItems()" :key="gi">{{ gi }}</span>
-                    <a href="#" v-on:click="test">test</a>
+                    <a href="#" v-on:click="test">test</a>-->
                     <div v-if="activeMenuItem == 'tasksList'"> 1 </div>
                     <div v-else-if="activeMenuItem == 'tasksToday'"> 2 </div>
                     <div v-else-if="activeMenuItem == 'tasksTomorrow'"> 3 </div>
                     <div v-else-if="activeMenuItem == 'archiveTasks'"> 4 </div>
                     <div v-else-if="activeMenuItem == 'trashCan'"> 5 </div>
+                    <div v-else-if="activeMenuItem == 'settings'"> <settings/> </div>
                     <div v-else> <defaultWorkBlock/> </div>
                 </div>
             </div>
@@ -29,11 +30,13 @@
 <script>
 import TopMenu from './uiElements/TopMenu.vue'
 import defaultWorkBlock from './uiElements/defaultWorkBlock.vue'
+import settings from './uiElements/settings.vue'
 export default {
   name: 'Tracker',
   components:{
       TopMenu,
-      defaultWorkBlock
+      defaultWorkBlock,
+      settings
   },
   methods:{
       getItems: function(){

@@ -10,13 +10,17 @@
     "lightTheme":"Set Light",
     "darkTheme": "Set Dark",
     "themeTumbler":"Switch theme",
+    "theme":"Theme",
     "localProfile":"Local profile",
     "createTask":"Create task",
+    "settings":"Settings",
+    "exit":"Exit",
     "menu":{
         "tasksList": {"icon":"tasks","text":"List of active tasks"},
         "tasksToday": {"icon":"calendar","text":"Tasks for today"},
         "tasksTomorrow": {"icon":"calendar-alt","text":"Tasks for tomorrow"},
         "archiveTasks": {"icon":"archive","text":"List of archived tasks"},
         "trashCan": {"icon":"trash","text":"Trash can"}
-    }
+    },
+    "removeData":"Remove app data"
 }

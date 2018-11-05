@@ -5,14 +5,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import langRu from './assets/lang_ru.json'
 import langEng from './assets/lang_en.json'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /*
 *
 * Configuration init
 *
 */
-library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt)
+library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 /*eslint-disable */

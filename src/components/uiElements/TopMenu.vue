@@ -11,8 +11,8 @@
                         </button>
                         <div class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton">
                             <a v-if="$bgStyle=='bg-light'" @click="$bgStyle='bg-dark'" class="dropdown-item" href="#">{{ $Lang.themeTumbler }} <font-awesome-icon icon="moon" /> </a><a v-else @click="$bgStyle='bg-light'" class="dropdown-item" href="#">{{ $Lang.themeTumbler }} <font-awesome-icon icon="sun" /> </a>
-                            <a class="dropdown-item" href="#">Settings</a>
-                            <a class="dropdown-item" href="#">Exit</a>
+                            <a class="dropdown-item" href="#"  @click="activeMenuItem = 'settings'">{{ $Lang.settings }}</a>
+                            <a class="dropdown-item" href="#">{{ $Lang.exit }}</a>
                         </div>
                     </div>
                 </div>
