@@ -14,7 +14,7 @@
                     <!--work
                     <span v-for="gi in getItems()" :key="gi">{{ gi }}</span>
                     <a href="#" v-on:click="test">test</a>-->
-                    <div v-if="activeMenuItem == 'tasksList'"> 1 </div>
+                    <div v-if="activeMenuItem == 'tasksList'"> <tasks-list v-bind:tasks="getActiveTasks()"/> </div>
                     <div v-else-if="activeMenuItem == 'tasksToday'"> 2 </div>
                     <div v-else-if="activeMenuItem == 'tasksTomorrow'"> 3 </div>
                     <div v-else-if="activeMenuItem == 'archiveTasks'"> 4 </div>
@@ -31,16 +31,21 @@
 import TopMenu from './uiElements/TopMenu.vue'
 import defaultWorkBlock from './uiElements/defaultWorkBlock.vue'
 import settings from './uiElements/settings.vue'
+import tasksList from './uiElements/tasksList.vue'
 export default {
   name: 'Tracker',
   components:{
       TopMenu,
       defaultWorkBlock,
-      settings
+      settings,
+      tasksList
   },
   methods:{
       getItems: function(){
           return ["1","2","3",Date()];
+      },
+      getActiveTasks: function(){
+          return JSON.parse(localStorage.tasks);
       },
       test: function(){
           var self = this;

@@ -11,7 +11,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-4"> {{ $Lang.removeData}}</div>
-            <div class="col-8"><button class="btn btn-outline-danger border-0 mb-1" type="button" @click="$isAppStarted=false; activeMenuItem = ''">{{ $Lang.removeData }}</button></div>
+            <div class="col-8"><button class="btn btn-outline-danger border-0 mb-1" type="button" @click="$isAppStarted=undefined; activeMenuItem = ''">{{ $Lang.removeData }}</button></div>
         </div>
     </div>
 </template>

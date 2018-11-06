@@ -22,5 +22,7 @@
         "archiveTasks": {"icon":"archive","text":"List of archived tasks"},
         "trashCan": {"icon":"trash","text":"Trash can"}
     },
-    "removeData":"Remove app data"
+    "removeData":"Remove app data",
+    "deleteTask":"Delete task",
+    "editTask":"Edit task"
 }
