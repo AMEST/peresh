@@ -24,5 +24,19 @@
     },
     "removeData":"Удалить данные",
     "deleteTask":"Удалить задачу",
-    "editTask":"Редактировать задачу"
+    "editTask":"Редактировать задачу",
+    "complited":"Сделано",
+    "status":{
+        "status":"Статус",
+        "do":"Выполняется",
+        "archive":"В архиве"
+    },
+    "priority":{
+        "priority":"Приоритет",
+        "hight":"Высокий",
+        "medium":"Средний",
+        "low":"Низкий"
+    },
+    "creationDate":"Дата создания",
+    "endDate":"Срок"
 }

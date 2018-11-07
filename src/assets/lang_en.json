@@ -24,5 +24,19 @@
     },
     "removeData":"Remove app data",
     "deleteTask":"Delete task",
-    "editTask":"Edit task"
+    "editTask":"Edit task",
+    "complited":"Complited",
+    "status":{
+        "status":"Status",
+        "do":"Do",
+        "archive":"Archive"
+    },
+    "priority":{
+        "priority":"Priority",
+        "hight":"Hight",
+        "medium":"Medium",
+        "low":"Low"
+    },
+    "creationDate":"Creation Date",
+    "endDate":"End Date"
 }

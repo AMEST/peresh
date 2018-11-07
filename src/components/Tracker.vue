@@ -20,6 +20,7 @@
                     <div v-else-if="activeMenuItem == 'archiveTasks'"> 4 </div>
                     <div v-else-if="activeMenuItem == 'trashCan'"> 5 </div>
                     <div v-else-if="activeMenuItem == 'settings'"> <settings/> </div>
+                    <div v-else-if="activeMenuItem == 'taskView'"><task-view/></div>
                     <div v-else> <defaultWorkBlock/> </div>
                 </div>
             </div>
@@ -32,13 +33,15 @@ import TopMenu from './uiElements/TopMenu.vue'
 import defaultWorkBlock from './uiElements/defaultWorkBlock.vue'
 import settings from './uiElements/settings.vue'
 import tasksList from './uiElements/tasksList.vue'
+import taskView from './uiElements/taskView.vue'
 export default {
   name: 'Tracker',
   components:{
       TopMenu,
       defaultWorkBlock,
       settings,
-      tasksList
+      tasksList,
+      taskView
   },
   methods:{
       getItems: function(){
@@ -90,5 +93,7 @@ export default {
     .light-item:hover, .light-item:active, .light-item-active{
         background-color: rgba(60, 67, 72, 0.1) !important;
     }
-    
+    .pointer{
+        cursor: pointer;
+    }
 </style>

@@ -33,6 +33,7 @@ let globalData = new Vue({
     $activeMenuItem: ((sessionStorage.activeMenuItem === 'undefined')||(sessionStorage.activeMenuItem === undefined)) ? 'TrackerMain' : sessionStorage.activeMenuItem,
     $bgStyle: localStorage.bgStyle,
     $AppName: 'Peresh',
+    $currentTask: "",
     $isAppStarted: ((localStorage.isAppStarted === 'undefined') || (localStorage.isAppStarted === undefined) ? false : localStorage.isAppStarted)
   }
 });
@@ -53,6 +54,10 @@ Vue.mixin({
     activeMenuItem: {
       get: function () { return globalData.$data.$activeMenuItem },
       set: function (newValue) { globalData.$data.$activeMenuItem = newValue; sessionStorage.activeMenuItem = newValue }
+    },
+    currentTask: {
+      get: function () { return globalData.$data.$currentTask },
+      set: function (newValue) { globalData.$data.$currentTask = newValue; sessionStorage.currentTask = newValue}
     }
   }
 })
