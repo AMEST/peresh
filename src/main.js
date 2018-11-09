@@ -30,10 +30,10 @@ if ((localStorage.tasks === undefined) || (localStorage.tasks === 'undefined')) 
 }
 let globalData = new Vue({
   data: {
-    $activeMenuItem: ((sessionStorage.activeMenuItem === 'undefined')||(sessionStorage.activeMenuItem === undefined)) ? 'TrackerMain' : sessionStorage.activeMenuItem,
+    $activeMenuItem: "TrackerMain",//((sessionStorage.activeMenuItem === 'undefined')||(sessionStorage.activeMenuItem === undefined)) ? 'TrackerMain' : sessionStorage.activeMenuItem,
     $bgStyle: localStorage.bgStyle,
     $AppName: 'Peresh',
-    $currentTask: "",
+    $currentTask: {"title":"","summary":"","priority":"medium","status":"do","created":new Date().getTime(),"expiry":new Date().getTime()+16000},
     $isAppStarted: ((localStorage.isAppStarted === 'undefined') || (localStorage.isAppStarted === undefined) ? false : localStorage.isAppStarted)
   }
 });
@@ -57,7 +57,7 @@ Vue.mixin({
     },
     currentTask: {
       get: function () { return globalData.$data.$currentTask },
-      set: function (newValue) { globalData.$data.$currentTask = newValue; sessionStorage.currentTask = newValue}
+      set: function (newValue) { globalData.$data.$currentTask = newValue; sessionStorage.currentTask = JSON.stringify(newValue)}
     }
   }
 })

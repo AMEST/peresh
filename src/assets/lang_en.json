@@ -24,6 +24,7 @@
     },
     "removeData":"Remove app data",
     "deleteTask":"Delete task",
+    "save":"Save",
     "editTask":"Edit task",
     "complited":"Complited",
     "status":{
@@ -38,5 +39,7 @@
         "low":"Low"
     },
     "creationDate":"Creation Date",
-    "endDate":"End Date"
+    "endDate":"End Date",
+    "summary":"Summary",
+    "title":"Task name"
 }

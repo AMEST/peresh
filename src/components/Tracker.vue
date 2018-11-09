@@ -21,6 +21,8 @@
                     <div v-else-if="activeMenuItem == 'trashCan'"> 5 </div>
                     <div v-else-if="activeMenuItem == 'settings'"> <settings/> </div>
                     <div v-else-if="activeMenuItem == 'taskView'"><task-view/></div>
+                    <div v-else-if="activeMenuItem == 'taskCreateView'"><task-create-view mode="create"/></div>
+                    <div v-else-if="activeMenuItem == 'taskEditView'"><task-create-view mode="edit"/></div>
                     <div v-else> <defaultWorkBlock/> </div>
                 </div>
             </div>
@@ -34,6 +36,7 @@ import defaultWorkBlock from './uiElements/defaultWorkBlock.vue'
 import settings from './uiElements/settings.vue'
 import tasksList from './uiElements/tasksList.vue'
 import taskView from './uiElements/taskView.vue'
+import taskCreateView from './uiElements/taskCreateView.vue'
 export default {
   name: 'Tracker',
   components:{
@@ -41,7 +44,8 @@ export default {
       defaultWorkBlock,
       settings,
       tasksList,
-      taskView
+      taskView,
+      taskCreateView
   },
   methods:{
       getItems: function(){

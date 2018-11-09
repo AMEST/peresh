@@ -4,7 +4,7 @@
             <a class="navbar-brand" href="#" @click="activeMenuItem = 'none'"><font-awesome-icon icon="cube"/> {{ $AppName }}</a>
             <div align="right">
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <button class="btn btn-outline-secondary btn-sm border-0 pr-2" data-toggle="tooltip" data-placement="bottom" v-bind:title="$Lang.createTask"><font-awesome-icon icon="plus" /></button>
+                    <button class="btn btn-outline-secondary btn-sm border-0 pr-2" data-toggle="tooltip" data-placement="bottom" v-bind:title="$Lang.createTask" @click="activeMenuItem = 'taskCreateView'"><font-awesome-icon icon="plus" /></button>
                     <div class="dropdown">
                         <button class="btn btn-outline-secondary dropdown-toggle btn-sm border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ $Lang.localProfile }}
