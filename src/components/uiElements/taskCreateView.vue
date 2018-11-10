@@ -3,11 +3,11 @@
         <h4 v-if="mode == 'create'" class="text-center mb-4">{{ $Lang.createTask }}</h4>
         <h4 v-else class="text-center mb-4">{{ $Lang.editTask }}</h4>
         <div class="row mb-3">
-            <div class="col-2"> {{ $Lang.title }}</div>
+            <div class="col-2 min-width-col"> {{ $Lang.title }}</div>
             <div class="col-10"><input class="form-control" type="text" v-model="currentTask['title']" v-bind:placeholder="$Lang.title"></div>
         </div>
         <div class="row mb-3">
-            <div class="col-2"> {{ $Lang.priority.priority }}</div>
+            <div class="col-2 min-width-col"> {{ $Lang.priority.priority }}</div>
             <div class="col-10">
                 <select class="form-control" v-model="currentTask.priority">
                     <option selected>low</option>
@@ -17,11 +17,11 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-2"> {{ $Lang.endDate }}</div>
+            <div class="col-2 min-width-col"> {{ $Lang.endDate }}</div>
             <div class="col-10"><input class="form-control" type="text" v-model="currentTask.expiry" v-bind:placeholder="$Lang.endDate"></div>
         </div>
         <div class="row mb-3">
-            <div class="col-2"> {{ $Lang.summary }}</div>
+            <div class="col-2 min-width-col"> {{ $Lang.summary }}</div>
             <div class="col-10"><textarea class="form-control" v-model="currentTask.summary" v-bind:placeholder="$Lang.summary+' Markdown works'" rows="7"></textarea></div>
         </div>
         <div align="right">
@@ -61,7 +61,6 @@ export default {
     },
     created: function(){
         var self = this;
-        console.log(self.mode)
         if( self.mode == "create"){
             self.currentTask.title = ""
             self.currentTask.summary = ""
@@ -72,16 +71,19 @@ export default {
     watch: { 
         mode: function(newVal, oldVal) { // watch it
           var self = this;
-          console.log('Prop changed: ', newVal, ' | was: ', oldVal)
-          if( newVal == "create"){
+          if (( newVal == "create") && (newVal != oldVal)){
             self.currentTask.title = ""
             self.currentTask.summary = ""
             self.currentTask.priority = "medium"
             self.currentTask.created = new Date().getTime()
-            console.log("run force update")
             this.$forceUpdate()
           }
         }
     }
 }
 </script>
+<style>
+.min-width-col{
+    min-width: 85px;
+}
+</style>

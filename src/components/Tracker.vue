@@ -10,13 +10,13 @@
                         </a>
                     </div>
                 </div>
-                <div class="col work-shadow pt-4">
+                <div class="col work-shadow pt-4 enable-scroll">
                     <!--work
                     <span v-for="gi in getItems()" :key="gi">{{ gi }}</span>
                     <a href="#" v-on:click="test">test</a>-->
                     <div v-if="activeMenuItem == 'tasksList'"> <tasks-list v-bind:tasks="getActiveTasks()"/> </div>
-                    <div v-else-if="activeMenuItem == 'tasksToday'"> 2 </div>
-                    <div v-else-if="activeMenuItem == 'tasksTomorrow'"> 3 </div>
+                    <div v-else-if="activeMenuItem == 'tasksToday'"> <tasks-list v-bind:tasks="tasksOnDay(0)"/> </div>
+                    <div v-else-if="activeMenuItem == 'tasksTomorrow'"> <tasks-list v-bind:tasks="tasksOnDay(86400000)"/> </div>
                     <div v-else-if="activeMenuItem == 'archiveTasks'"> 4 </div>
                     <div v-else-if="activeMenuItem == 'trashCan'"> 5 </div>
                     <div v-else-if="activeMenuItem == 'settings'"> <settings/> </div>
@@ -52,7 +52,8 @@ export default {
           return ["1","2","3",Date()];
       },
       getActiveTasks: function(){
-          return JSON.parse(localStorage.tasks);
+          var allTasks = JSON.parse(localStorage.tasks);
+          return this.sortTasks(allTasks,true);
       },
       test: function(){
           var self = this;
@@ -62,6 +63,42 @@ export default {
           var self = this;
           return self.$Lang.menu;
       },
+      sortTasks: function(tlist, isMap){
+          var newTList = [];
+          if(isMap){
+            for(var key in tlist){
+                newTList.push(tlist[key])
+            }
+          }else{
+              newTList = tlist
+          }
+          var b = undefined;
+          for(var j = 0; j < newTList.length; j++){
+            for(var i = 0; i < newTList.length-1;i++ ){
+                if( parseInt(newTList[i].created) < parseInt(newTList[i+1].created)){
+                    b = newTList[i]
+                    newTList[i] = newTList[i+1]
+                    newTList[i+1] = b
+                }
+            }
+          }
+          return newTList
+      },
+      tasksOnDay: function(dayOffset){
+          var tlist = JSON.parse(localStorage.tasks);
+          var newTList = [];
+          var ds = new Date();
+          ds.setHours(0,0,0,0)
+          var de = new Date();
+          de.setHours(23,59,59)
+          for(var key in tlist){
+              var task = tlist[key]
+              if(( parseInt(task.expiry) >= (ds.getTime()+dayOffset)) && (parseInt(task.expiry) <= (de.getTime()+dayOffset))){
+                newTList.push(task)
+              }
+          }
+          return this.sortTasks(newTList,false)
+      }
   }
 }
 </script>
@@ -99,5 +136,8 @@ export default {
     }
     .pointer{
         cursor: pointer;
+    }
+    .enable-scroll{
+        overflow-y: auto !important;
     }
 </style>

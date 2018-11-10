@@ -11,6 +11,10 @@
     "darkTheme": "Set Dark",
     "themeTumbler":"Switch theme",
     "theme":"Theme",
+    "export":{
+        "label":"Export tasks",
+        "button":"Export"
+    },
     "localProfile":"Local profile",
     "createTask":"Create task",
     "settings":"Settings",

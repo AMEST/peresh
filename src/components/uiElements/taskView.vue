@@ -15,12 +15,12 @@
         </div>
         <!--end-->
         <div class="row mt-3">
-            <div v-if="currentTask.priority" class="col">{{ $Lang.priority.priority }}: <span class="ml-5 badge" v-bind:class="priorityColor">{{ $Lang.priority[currentTask.priority] }}</span></div>
-            <div v-if="currentTask.status" class="col">{{ $Lang.status.status }}: <span class="ml-5 badge badge-secondary">{{ $Lang.status[currentTask.status] }}</span></div>
+            <div v-if="currentTask.priority" class="col">{{ $Lang.priority.priority }}: <span class="float-right badge" v-bind:class="priorityColor">{{ $Lang.priority[currentTask.priority] }}</span></div>
+            <div v-if="currentTask.status" class="col">{{ $Lang.status.status }}: <span class="float-right badge badge-secondary">{{ $Lang.status[currentTask.status] }}</span></div>
         </div>
         <div class="row mt-2">
-            <div class="col">{{ $Lang.creationDate }}:  <span class="ml-5">{{ getCreated() }}</span></div>
-            <div class="col">{{ $Lang.endDate }}:  <span class="ml-5">{{ getExpiry() }}</span></div>
+            <div class="col">{{ $Lang.creationDate }}:  <span class="float-right">{{ getCreated() }}</span></div>
+            <div class="col">{{ $Lang.endDate }}:  <span class="float-right">{{ getExpiry() }}</span></div>
         </div>
         <div class="row mt-2">
             <div v-if="currentTask.summary" class="col"> {{ $Lang.summary }}: </div>
