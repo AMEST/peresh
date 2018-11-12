@@ -1,5 +1,5 @@
 <template>
-    <main class="h-100vh">
+    <main class="h-100vh overflow-hidden">
         <top-menu/>
         <div class="container-fluid h-100 mx-auto max-fluid-container-width">
             <div class="row h-100"> 
@@ -139,5 +139,8 @@ export default {
     }
     .enable-scroll{
         overflow-y: auto !important;
+    }
+    .overflow-hidden{
+        overflow: hidden;
     }
 </style>

@@ -17,6 +17,7 @@
     "jquery": "^3.3.1",
     "popper.js": "^1.14.4",
     "vue": "^2.5.17",
+    "vue-bootstrap-datetimepicker": "^5.0.1",
     "vue-markdown": "^2.2.4"
   },
   "devDependencies": {

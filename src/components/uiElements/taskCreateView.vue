@@ -18,7 +18,9 @@
         </div>
         <div class="row mb-3">
             <div class="col-2 min-width-col"> {{ $Lang.endDate }}</div>
-            <div class="col-10"><input class="form-control" type="text" v-model="currentTask.expiry" v-bind:placeholder="$Lang.endDate"></div>
+            <div class="col-10">
+                <date-time-picker v-model="date" :config="options" @dp-change="endDateChanged"></date-time-picker> 
+            </div>
         </div>
         <div class="row mb-3">
             <div class="col-2 min-width-col"> {{ $Lang.summary }}</div>
@@ -32,9 +34,25 @@
     </div>
 </template>
 <script>
+// Import this component
+import dateTimePicker from 'vue-bootstrap-datetimepicker';
+// Import date picker css
+import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
 export default {
     name:"taskCreateView",
     props: ["mode"],
+    data () {
+      return {
+        date: new Date(),
+        options: {
+          format: 'MM/DD/YYYY HH:mm',
+          useCurrent: false,
+        }       
+      }
+    },
+    components:{
+        dateTimePicker
+    },
     methods:{
         createNewTask: function(){
             var self = this;
@@ -57,6 +75,13 @@ export default {
                 name += chars[Math.floor(Math.random() * 8)];
             }
             return name;
+        },
+        endDateChanged: function(event){
+            var self = this
+            console.log(event)
+            console.log(self.date)
+            self.currentTask.expiry = new Date(self.date).getTime()
+            self.$forceUpdate()
         }
     },
     created: function(){

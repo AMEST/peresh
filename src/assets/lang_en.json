@@ -15,6 +15,11 @@
         "label":"Export tasks",
         "button":"Export"
     },
+    "import":{
+        "label":"Import tasks",
+        "button":"Choose",
+        "fileLabel":"Choose file for imput"
+    },
     "localProfile":"Local profile",
     "createTask":"Create task",
     "settings":"Settings",

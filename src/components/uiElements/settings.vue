@@ -31,6 +31,7 @@
 <script>
 import langButton from './langButton.vue'
 import themeChangeButton from './themeChangeButton.vue'
+
 export default {
   name: "settings",
   components:{
