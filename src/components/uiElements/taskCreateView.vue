@@ -59,6 +59,8 @@ export default {
             var allTasks = JSON.parse(localStorage.tasks);
             var nameNewTask = self.rand_name()
             self.currentTask.id = nameNewTask
+            self.currentTask.status = "do"
+            self.currentTask.created = new Date().getTime()
             allTasks[nameNewTask] = self.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
         },
@@ -90,6 +92,7 @@ export default {
             self.currentTask.title = ""
             self.currentTask.summary = ""
             self.currentTask.priority = "medium"
+            self.currentTask.status = "do"
             self.currentTask.created = new Date().getTime()
         }
     },
@@ -100,6 +103,7 @@ export default {
             self.currentTask.title = ""
             self.currentTask.summary = ""
             self.currentTask.priority = "medium"
+            self.currentTask.status = "do"
             self.currentTask.created = new Date().getTime()
             this.$forceUpdate()
           }

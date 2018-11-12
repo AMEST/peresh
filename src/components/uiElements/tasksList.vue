@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h4 class="text-center mb-4">{{ $Lang.menu.tasksList.text }}</h4>
+        <h4 class="text-center mb-4">{{ title }}</h4>
+        <div v-if="!tasks[0]">Not tasks in this menu</div>
         <ul class="list-group">
             <li v-for="(item,key) in tasks" :key="item,key" v-bind:id="item.id" class="list-group-item d-flex justify-content-between align-items-center" v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item bg-dark': 'light-item']">
                 <span class="pointer"  @click="currentTask = item, activeMenuItem = 'taskView'">{{ item.title }}</span>
@@ -15,6 +16,6 @@
 <script>
 export default {
     name:"tasksList",
-    props: ["tasks"]
+    props: ["tasks","title"]
 }
 </script>

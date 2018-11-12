@@ -36,10 +36,11 @@
     "save":"Save",
     "editTask":"Edit task",
     "complited":"Complited",
+    "rework":"Return to work",
     "status":{
         "status":"Status",
         "do":"Do",
-        "archive":"Archive"
+        "archiv":"Archive"
     },
     "priority":{
         "priority":"Priority",

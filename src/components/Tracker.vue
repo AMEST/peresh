@@ -14,11 +14,11 @@
                     <!--work
                     <span v-for="gi in getItems()" :key="gi">{{ gi }}</span>
                     <a href="#" v-on:click="test">test</a>-->
-                    <div v-if="activeMenuItem == 'tasksList'"> <tasks-list v-bind:tasks="getActiveTasks()"/> </div>
-                    <div v-else-if="activeMenuItem == 'tasksToday'"> <tasks-list v-bind:tasks="tasksOnDay(0)"/> </div>
-                    <div v-else-if="activeMenuItem == 'tasksTomorrow'"> <tasks-list v-bind:tasks="tasksOnDay(86400000)"/> </div>
-                    <div v-else-if="activeMenuItem == 'archiveTasks'"> 4 </div>
-                    <div v-else-if="activeMenuItem == 'trashCan'"> 5 </div>
+                    <div v-if="activeMenuItem == 'tasksList'"> <tasks-list v-bind:title="$Lang.menu.tasksList.text" v-bind:tasks="getActiveTasks()"/> </div>
+                    <div v-else-if="activeMenuItem == 'tasksToday'"> <tasks-list v-bind:title="$Lang.menu.tasksToday.text" v-bind:tasks="tasksOnDay(0)"/> </div>
+                    <div v-else-if="activeMenuItem == 'tasksTomorrow'"> <tasks-list v-bind:title="$Lang.menu.tasksTomorrow.text" v-bind:tasks="tasksOnDay(86400000)"/> </div>
+                    <div v-else-if="activeMenuItem == 'archiveTasks'"><tasks-list v-bind:title="$Lang.menu.archiveTasks.text" v-bind:tasks="getArchivedTasks()"/></div>
+                    <div v-else-if="activeMenuItem == 'trashCan'"> trashCan in future </div>
                     <div v-else-if="activeMenuItem == 'settings'"> <settings/> </div>
                     <div v-else-if="activeMenuItem == 'taskView'"><task-view/></div>
                     <div v-else-if="activeMenuItem == 'taskCreateView'"><task-create-view mode="create"/></div>
@@ -53,7 +53,21 @@ export default {
       },
       getActiveTasks: function(){
           var allTasks = JSON.parse(localStorage.tasks);
-          return this.sortTasks(allTasks,true);
+          var newTList = [];
+          for(var key in allTasks){
+              if((allTasks[key].status == "do") && ((allTasks[key].isDeleted == undefined) || (allTasks[key].isDeleted == false)))
+                newTList.push(allTasks[key])
+          }
+          return this.sortTasks(newTList,false);
+      },
+      getArchivedTasks: function(){
+          var allTasks = JSON.parse(localStorage.tasks);
+          var newTList = [];
+          for(var key in allTasks){
+              if((allTasks[key].status == "archiv") && ((allTasks[key].isDeleted == undefined) || (allTasks[key].isDeleted == false)))
+                newTList.push(allTasks[key])
+          }
+          return this.sortTasks(newTList,false);
       },
       test: function(){
           var self = this;
@@ -93,7 +107,7 @@ export default {
           de.setHours(23,59,59)
           for(var key in tlist){
               var task = tlist[key]
-              if(( parseInt(task.expiry) >= (ds.getTime()+dayOffset)) && (parseInt(task.expiry) <= (de.getTime()+dayOffset))){
+              if(( parseInt(task.expiry) >= (ds.getTime()+dayOffset)) && (parseInt(task.expiry) <= (de.getTime()+dayOffset)) && (tlist[key].status == "do") && ((tlist[key].isDeleted == undefined) || (tlist[key].isDeleted == false))){
                 newTList.push(task)
               }
           }
