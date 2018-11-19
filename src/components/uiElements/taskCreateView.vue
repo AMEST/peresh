@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container pb-for-oneline">
         <h4 v-if="mode == 'create'" class="text-center mb-4">{{ $Lang.createTask }}</h4>
         <h4 v-else class="text-center mb-4">{{ $Lang.editTask }}</h4>
         <div class="row mb-3">
@@ -26,11 +26,16 @@
             <div class="col-2 min-width-col"> {{ $Lang.summary }}</div>
             <div class="col-10"><textarea class="form-control" v-model="currentTask.summary" v-bind:placeholder="$Lang.summary+' Markdown works'" rows="7"></textarea></div>
         </div>
-        <div align="right">
-            <button v-if="mode == 'create'" class="btn btn-outline-secondary border-1 mb-1" type="button" v-on:click="createNewTask" @click="activeMenuItem = 'taskView'">{{ $Lang.createTask }}</button>
-            <button v-else class="btn btn-outline-secondary border-1 mb-1" type="button" v-on:click="editTask" @click="activeMenuItem = 'taskView'">{{ $Lang.save }}</button>
+        <div class="row mb-3">
+            <div class="col-2 min-width-col"></div>
+            <div class="col-10">
+                <div align="right">
+                    <button v-if="mode == 'create'" class="btn btn-outline-secondary border-1 mb-1" type="button" v-on:click="createNewTask" @click="activeMenuItem = 'taskView'">{{ $Lang.createTask }}</button>
+                    <button v-else class="btn btn-outline-secondary border-1 mb-1" type="button" v-on:click="editTask" @click="activeMenuItem = 'taskView'">{{ $Lang.save }}</button>
+                </div>
+            </div>
         </div>
-        {{ currentTask }}
+        <div style="display: block;width: 10px;height: 103px;"></div>
     </div>
 </template>
 <script>
@@ -114,5 +119,8 @@ export default {
 <style>
 .min-width-col{
     min-width: 85px;
+}
+.pb-for-oneline{
+    padding-bottom: 80px;
 }
 </style>

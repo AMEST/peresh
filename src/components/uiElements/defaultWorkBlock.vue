@@ -1,5 +1,5 @@
 <template>
-  <div class="row align-items-center h-100vh">
+  <div class="row align-items-center h-100vh-dwb">
     <div class="col text-center">
         <font-awesome-icon style="font-size: 5em" class="mb-2" icon="columns" /><br>
         <button class="btn btn-outline-danger border-0 mb-1 button-default-width" type="button" @click="activeMenuItem = 'taskCreateView'">{{ $Lang.createTask }}</button><br>
@@ -14,8 +14,8 @@ export default {
 };
 </script>
 <style>
-    .h-100vh{
-        height: 100vh;
+    .h-100vh-dwb{
+        height: calc( 100vh - 24px );;
     }
     .button-default-width{
         width: 200px;

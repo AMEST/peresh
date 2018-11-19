@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pb-for-oneline">
         <h4 class="text-center mb-4">{{ title }}</h4>
         <div v-if="!tasks[0]">Not tasks in this menu</div>
         <ul class="list-group">
@@ -19,3 +19,8 @@ export default {
     props: ["tasks","title"]
 }
 </script>
+<style>
+    .pb-for-oneline{
+        padding-bottom: 60px;
+    }
+</style>
