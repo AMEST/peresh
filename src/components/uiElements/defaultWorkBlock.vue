@@ -15,7 +15,7 @@ export default {
 </script>
 <style>
     .h-100vh-dwb{
-        height: calc( 100vh - 24px );;
+        height: calc( 100vh - 24px );
     }
     .button-default-width{
         width: 200px;

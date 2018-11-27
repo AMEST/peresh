@@ -1,19 +1,22 @@
 import Vue from 'vue'
 import App from './App.vue'
+import Vue2TouchEvents from 'vue2-touch-events'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import langRu from './assets/lang_ru.json'
 import langEng from './assets/lang_en.json'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import './registerServiceWorker'
 /*
 *
 * Configuration init
 *
 */
-library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen)
+library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.use(Vue2TouchEvents)
 Vue.config.productionTip = false
 /*eslint-disable */
 var lang = undefined
@@ -34,7 +37,8 @@ let globalData = new Vue({
     $bgStyle: localStorage.bgStyle,
     $AppName: 'Peresh',
     $currentTask: {"title":"","summary":"","priority":"medium","status":"do","created":new Date().getTime(),"expiry":new Date().getTime()+16000},
-    $isAppStarted: ((localStorage.isAppStarted === 'undefined') || (localStorage.isAppStarted === undefined) ? false : localStorage.isAppStarted)
+    $isAppStarted: ((localStorage.isAppStarted === 'undefined') || (localStorage.isAppStarted === undefined) ? false : localStorage.isAppStarted),
+    $isMenuOpened: false
   }
 });
 
@@ -58,6 +62,10 @@ Vue.mixin({
     currentTask: {
       get: function () { return globalData.$data.$currentTask },
       set: function (newValue) { globalData.$data.$currentTask = newValue; sessionStorage.currentTask = JSON.stringify(newValue)}
+    },
+    $isMenuOpened: {
+      get: function () { return globalData.$data.$isMenuOpened },
+      set: function (newValue) { globalData.$data.$isMenuOpened = newValue}
     }
   }
 })

@@ -1,7 +1,10 @@
 <template>
      <nav class="navbar shadow" v-bind:class="[ $bgStyle , $bgStyle == 'bg-dark'? 'navbar-dark': 'navbar-light']">
         <div class="container">
-            <a class="navbar-brand" href="#" @click="activeMenuItem = 'none'"><font-awesome-icon icon="cube"/> {{ $AppName }}</a>
+            <div>
+                <a class="d-lg-none navbar-brand" href="#" @click="$isMenuOpened = !$isMenuOpened"> <font-awesome-icon icon="bars" /></a>
+                <a class="navbar-brand" href="#" @click="activeMenuItem = 'none'"><font-awesome-icon icon="cube"/> {{ $AppName }}</a>
+            </div>
             <div align="right">
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <button class="btn btn-outline-secondary btn-sm border-0 pr-2" data-toggle="tooltip" data-placement="bottom" v-bind:title="$Lang.createTask" @click="activeMenuItem = 'taskCreateView'"><font-awesome-icon icon="plus" /></button>

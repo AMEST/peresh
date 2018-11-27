@@ -1,8 +1,15 @@
 <template>
-    <main class="h-100vh overflow-hidden">
+    <main class="h-100vh overflow-hidden" v-touch:swipe.right="swipeRight" v-touch:swipe.left="swipeLeft">
         <top-menu/>
         <div class="container-fluid h-100 mx-auto max-fluid-container-width">
             <div class="row h-100"> 
+                <div v-if="$isMenuOpened" class="ocmenu ocmenu-shadow inrow-menu d-lg-none pt-4 pr-0" v-bind:class="[$bgStyle]">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action" v-for="(item, key) in getMenu()" :key="key, item" @click="activeMenuItem = key" v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item': 'light-item', activeMenuItem == key ? ($bgStyle == 'bg-dark' ? 'dark-item-active' : 'light-item-active') : '']">
+                            <font-awesome-icon v-bind:icon="item.icon" /><span class="pl-1"> {{ item.text }}</span>
+                        </a>
+                    </div>
+                </div>
                 <div class="d-none d-sm-none d-md-none d-lg-block col w-25 inrow-menu pt-4 pr-0">
                     <div class="list-group">
                         <a href="#" class="list-group-item list-group-item-action" v-for="(item, key) in getMenu()" :key="key, item" @click="activeMenuItem = key" v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item': 'light-item', activeMenuItem == key ? ($bgStyle == 'bg-dark' ? 'dark-item-active' : 'light-item-active') : '']">
@@ -11,9 +18,6 @@
                     </div>
                 </div>
                 <div class="col work-shadow pt-4 enable-scroll">
-                    <!--work
-                    <span v-for="gi in getItems()" :key="gi">{{ gi }}</span>
-                    <a href="#" v-on:click="test">test</a>-->
                     <div v-if="activeMenuItem == 'tasksList'"> <tasks-list v-bind:title="$Lang.menu.tasksList.text" v-bind:tasks="getActiveTasks()"/> </div>
                     <div v-else-if="activeMenuItem == 'tasksToday'"> <tasks-list v-bind:title="$Lang.menu.tasksToday.text" v-bind:tasks="tasksOnDay(0)"/> </div>
                     <div v-else-if="activeMenuItem == 'tasksTomorrow'"> <tasks-list v-bind:title="$Lang.menu.tasksTomorrow.text" v-bind:tasks="tasksOnDay(86400000)"/> </div>
@@ -112,6 +116,16 @@ export default {
               }
           }
           return this.sortTasks(newTList,false)
+      },
+      swipeRight: function(){
+          var self = this;
+          console.log('[Swipe]', 'Right')
+          console.log(self)
+          self.$isMenuOpened = true;
+      },
+      swipeLeft: function(){
+          var self = this;
+          self.$isMenuOpened = false;
       }
   }
 }
@@ -132,6 +146,21 @@ export default {
     }
     .work-shadow{
         box-shadow: inset 0 .5rem 1rem rgba(0,0,0,.35)!important;
+    }
+    @media only screen and (max-width: 376px) {
+        .ocmenu{
+            height: calc( 100% - 85px ) !important;
+        }
+    }
+    .ocmenu{
+        max-width: 300px !important;
+        position: absolute;
+        height: 100%;
+        z-index: 1;
+        height: calc( 100% - 56px );
+    }
+    .ocmenu-shadow{
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.35)!important;
     }
     .max-fluid-container-width{
         max-width: 1100px;
