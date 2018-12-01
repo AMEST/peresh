@@ -33,6 +33,7 @@
         <div class="row ml-3">
             <div v-if="currentTask.summary" class="col" style="min-height: 350px;"><vue-markdown> {{ currentTask.summary }} </vue-markdown></div>
         </div>
+        <div style="display: block;width: 10px;height: 24px;"></div>
     </div>
 </template>
 <script>

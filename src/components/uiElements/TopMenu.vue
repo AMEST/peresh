@@ -1,5 +1,5 @@
 <template>
-     <nav class="navbar shadow" v-bind:class="[ $bgStyle , $bgStyle == 'bg-dark'? 'navbar-dark': 'navbar-light']">
+     <nav class="navbar shadow topmenu" v-bind:class="[ $bgStyle , $bgStyle == 'bg-dark'? 'navbar-dark': 'navbar-light']">
         <div class="container">
             <div>
                 <a class="d-lg-none navbar-brand" href="#" @click="$isMenuOpened = !$isMenuOpened"> <font-awesome-icon icon="bars" /></a>
@@ -28,3 +28,12 @@ export default {
     name:"TopMenu"
 }
 </script>
+<<style>
+    .topmenu{
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        width: 100%;
+    }
+</style>

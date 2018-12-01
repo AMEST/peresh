@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div style="display: block;width: 10px;height: 103px;"></div>
+        <div style="display: block;width: 10px;height: 24px;"></div>
     </div>
 </template>
 <script>
