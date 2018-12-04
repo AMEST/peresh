@@ -14,6 +14,9 @@ import './registerServiceWorker'
 * Configuration init
 *
 */
+window.addEventListener('beforeinstallprompt', function(event) {
+  event.prompt();
+})
 library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vue2TouchEvents)
