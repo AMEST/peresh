@@ -14,8 +14,9 @@ import './registerServiceWorker'
 * Configuration init
 *
 */
-window.addEventListener('beforeinstallprompt', function(event) {
-  event.prompt();
+window.addEventListener('beforeinstallprompt', function (event) {
+  console.log("prompt")
+  event.prompt()
 })
 library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -46,6 +47,21 @@ let globalData = new Vue({
 });
 
 Vue.mixin({
+  methods: {
+    uploadToDropBox() {
+      if((localStorage.dropBoxToken !== undefined)||(localStorage.dropBoxToken!=='undefined')){
+        var request = new XMLHttpRequest();
+        request.open("POST","https://content.dropboxapi.com/2/files/upload",true)
+        request.setRequestHeader("Authorization","Bearer "+localStorage.dropBoxToken)
+        request.setRequestHeader("Dropbox-API-Arg",'{"path": "/issues.json","mode": "overwrite","autorename": false,"mute": false,"strict_conflict": false}')
+        request.setRequestHeader("Content-Type",'application/octet-stream')
+        request.onload = () => {
+          console.log('[DBX]', request.response)
+        }
+        request.send(localStorage.tasks)
+      }
+    },
+  },
   computed: {
     $bgStyle: {
       get: function () { return globalData.$data.$bgStyle },

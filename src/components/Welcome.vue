@@ -1,7 +1,7 @@
 <template>
   <div class="row align-items-center h-100vh">
     <div class="col text-center">
-        <img alt="App logo" src="../assets/scheme.png">
+        <img alt="App logo" src="../assets/peresh.png">
         <h3>{{ msg }} {{ $AppName }}</h3>
         <button type="button" class="btn btn-info welcome-element-width" @click="$isAppStarted=true">{{ $Lang.buttonGetStartedLocal }}</button><br>
         <small class="text-muted welcome-element-width">{{ $Lang.localProfileSmall }}</small>

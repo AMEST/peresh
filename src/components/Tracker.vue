@@ -23,7 +23,7 @@
                         <div v-else-if="activeMenuItem == 'tasksToday'"> <tasks-list v-bind:title="$Lang.menu.tasksToday.text" v-bind:tasks="tasksOnDay(0)"/> </div>
                         <div v-else-if="activeMenuItem == 'tasksTomorrow'"> <tasks-list v-bind:title="$Lang.menu.tasksTomorrow.text" v-bind:tasks="tasksOnDay(86400000)"/> </div>
                         <div v-else-if="activeMenuItem == 'archiveTasks'"><tasks-list v-bind:title="$Lang.menu.archiveTasks.text" v-bind:tasks="getArchivedTasks()"/></div>
-                        <div v-else-if="activeMenuItem == 'trashCan'"> trashCan in future </div>
+                        <div v-else-if="activeMenuItem == 'trashCan'"> <tasks-list v-bind:title="$Lang.menu.trashCan.text" v-bind:tasks="getTrashCan()"/> </div>
                         <div v-else-if="activeMenuItem == 'settings'"> <settings/> </div>
                         <div v-else-if="activeMenuItem == 'taskView'"><task-view/></div>
                         <div v-else-if="activeMenuItem == 'taskCreateView'"><task-create-view mode="create"/></div>
@@ -71,6 +71,15 @@ export default {
           var newTList = [];
           for(var key in allTasks){
               if((allTasks[key].status == "archiv") && ((allTasks[key].isDeleted == undefined) || (allTasks[key].isDeleted == false)))
+                newTList.push(allTasks[key])
+          }
+          return this.sortTasks(newTList,false);
+      },
+      getTrashCan: function(){
+          var allTasks = JSON.parse(localStorage.tasks);
+          var newTList = [];
+          for(var key in allTasks){
+              if(allTasks[key].isDeleted)
                 newTList.push(allTasks[key])
           }
           return this.sortTasks(newTList,false);

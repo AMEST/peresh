@@ -15,6 +15,7 @@
                         <div class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton">
                             <a v-if="$bgStyle=='bg-light'" @click="$bgStyle='bg-dark'" class="dropdown-item" href="#">{{ $Lang.themeTumbler }} <font-awesome-icon icon="moon" /> </a><a v-else @click="$bgStyle='bg-light'" class="dropdown-item" href="#">{{ $Lang.themeTumbler }} <font-awesome-icon icon="sun" /> </a>
                             <a class="dropdown-item" href="#"  @click="activeMenuItem = 'settings'">{{ $Lang.settings }}</a>
+                            <a class="dropdown-item" href="#"  v-on:click="uploadToDropBox()">DropBox</a>
                             <a class="dropdown-item" href="#">{{ $Lang.exit }}</a>
                         </div>
                     </div>
@@ -28,7 +29,7 @@ export default {
     name:"TopMenu"
 }
 </script>
-<<style>
+<style>
     .topmenu{
         position: fixed !important;
         top: 0;
