@@ -61,19 +61,21 @@ export default {
     methods:{
         createNewTask: function(){
             var self = this;
-            var allTasks = JSON.parse(localStorage.tasks);
+            var allTasks = JSON.parse(self.getTasks());
             var nameNewTask = self.rand_name()
             self.currentTask.id = nameNewTask
             self.currentTask.status = "do"
             self.currentTask.created = new Date().getTime()
             allTasks[nameNewTask] = self.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
+            self.uploadToDropBox()
         },
         editTask: function(){
             var self = this;
-            var allTasks = JSON.parse(localStorage.tasks);
+            var allTasks = JSON.parse(self.getTasks());
             allTasks[self.currentTask.id] = self.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
+            self.uploadToDropBox()
         },
         rand_name: function(){
             var chars = ["A","P","C","X","E","T","O","B"]
@@ -85,8 +87,6 @@ export default {
         },
         endDateChanged: function(event){
             var self = this
-            console.log(event)
-            console.log(self.date)
             self.currentTask.expiry = new Date(self.date).getTime()
             self.$forceUpdate()
         }

@@ -28,10 +28,8 @@ export default {
     props: ["tasks","title"],
     methods:{
         setTrash: function(task){
-            console.log("Executed")
-            console.log(this.selectedTask)
             var self = this;
-            var allTasks = JSON.parse(localStorage.tasks);
+            var allTasks = JSON.parse(self.getTasks());
             if( self.activeMenuItem ===  'trashCan'){
                 delete allTasks[self.selectedTask.id];
             }else{
@@ -44,6 +42,7 @@ export default {
             self.$forceUpdate();
             self.activeMenuItem = ami;
             self.$forceUpdate();
+            self.uploadToDropBox()
         }
     }
 }

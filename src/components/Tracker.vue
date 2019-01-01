@@ -58,7 +58,8 @@ export default {
           return ["1","2","3",Date()];
       },
       getActiveTasks: function(){
-          var allTasks = JSON.parse(localStorage.tasks);
+          var self = this
+          var allTasks = JSON.parse(self.getTasks());
           var newTList = [];
           for(var key in allTasks){
               if((allTasks[key].status == "do") && ((allTasks[key].isDeleted == undefined) || (allTasks[key].isDeleted == false)))
@@ -67,7 +68,8 @@ export default {
           return this.sortTasks(newTList,false);
       },
       getArchivedTasks: function(){
-          var allTasks = JSON.parse(localStorage.tasks);
+          var self = this
+          var allTasks = JSON.parse(self.getTasks());
           var newTList = [];
           for(var key in allTasks){
               if((allTasks[key].status == "archiv") && ((allTasks[key].isDeleted == undefined) || (allTasks[key].isDeleted == false)))
@@ -76,7 +78,8 @@ export default {
           return this.sortTasks(newTList,false);
       },
       getTrashCan: function(){
-          var allTasks = JSON.parse(localStorage.tasks);
+          var self = this
+          var allTasks = JSON.parse(self.getTasks());
           var newTList = [];
           for(var key in allTasks){
               if(allTasks[key].isDeleted)
@@ -114,7 +117,8 @@ export default {
           return newTList
       },
       tasksOnDay: function(dayOffset){
-          var tlist = JSON.parse(localStorage.tasks);
+          var self = this
+          var tlist = JSON.parse(self.getTasks());
           var newTList = [];
           var ds = new Date();
           ds.setHours(0,0,0,0)
@@ -138,6 +142,10 @@ export default {
           var self = this;
           self.$isMenuOpened = false;
       }
+  },
+  created: function(){
+      var self = this
+      self.syncWithDropBox()
   }
 }
 </script>

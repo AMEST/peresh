@@ -14,6 +14,28 @@ import './registerServiceWorker'
 * Configuration init
 *
 */
+// Parse data in hash
+var hash = window.location.hash.substring(1)
+var params = {}
+hash.split('&').map(hk => {
+  let temp = hk.split('=')
+  params[temp[0]] = temp[1]
+})
+/*eslint-disable */
+// Write dropbox access token to local storage & reload page
+if ( params.access_token !== undefined ) {
+  localStorage.dropBoxToken = params.access_token
+  localStorage.dropBoxMode = "enable"
+  var request = new XMLHttpRequest();
+  request.open("POST","https://api.dropboxapi.com/2/users/get_current_account",true)
+  request.setRequestHeader("Authorization","Bearer "+localStorage.dropBoxToken)
+  request.onload = function(){
+    var profile = JSON.parse(request.response)
+    localStorage.dropBoxUser = profile.name.display_name
+    window.location = window.location.protocol +"//" + window.location.host
+  }
+  request.send(null)
+}
 window.addEventListener('beforeinstallprompt', function (event) {
   console.log("prompt")
   event.prompt()
@@ -22,18 +44,24 @@ library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vue2TouchEvents)
 Vue.config.productionTip = false
-/*eslint-disable */
+//Set Language
 var lang = undefined
 if (localStorage.lang === 'ru') {
   lang = langRu
 } else {
   lang = langEng
 }
+//Set default theme
 if ((localStorage.bgStyle === undefined) || (localStorage.bgStyle === 'undefined')) {
   localStorage.bgStyle = 'bg-light'
 }
+//Set default tasks
 if ((localStorage.tasks === undefined) || (localStorage.tasks === 'undefined')) {
   localStorage.tasks = JSON.stringify({})
+}
+//Set default dropBox mode
+if ((localStorage.dropBoxMode === undefined) || (localStorage.dropBoxMode === 'undefined')) {
+  localStorage.dropBoxMode = "disable"
 }
 let globalData = new Vue({
   data: {
@@ -42,25 +70,55 @@ let globalData = new Vue({
     $AppName: 'Peresh',
     $currentTask: {"title":"","summary":"","priority":"medium","status":"do","created":new Date().getTime(),"expiry":new Date().getTime()+16000},
     $isAppStarted: ((localStorage.isAppStarted === 'undefined') || (localStorage.isAppStarted === undefined) ? false : localStorage.isAppStarted),
-    $isMenuOpened: false
+    $isMenuOpened: false,
+    $isDropBoxMode: (localStorage.dropBoxMode == "enable")?true:false
   }
 });
 
 Vue.mixin({
   methods: {
     uploadToDropBox() {
-      if((localStorage.dropBoxToken !== undefined)||(localStorage.dropBoxToken!=='undefined')){
+      if((localStorage.dropBoxToken !== undefined)||(localStorage.dropBoxToken!=='undefined') && (localStorage.dropBoxMode == "enable")){
         var request = new XMLHttpRequest();
         request.open("POST","https://content.dropboxapi.com/2/files/upload",true)
         request.setRequestHeader("Authorization","Bearer "+localStorage.dropBoxToken)
         request.setRequestHeader("Dropbox-API-Arg",'{"path": "/issues.json","mode": "overwrite","autorename": false,"mute": false,"strict_conflict": false}')
         request.setRequestHeader("Content-Type",'application/octet-stream')
         request.onload = () => {
+          this.syncWithDropBox()
           console.log('[DBX]', request.response)
         }
         request.send(localStorage.tasks)
       }
     },
+    goAuthDropBox(){
+      var redirectUrl = window.location.protocol +"//" + window.location.host
+      var client_id = "3pap37yp0kr2bei"
+      var authUrl = "https://www.dropbox.com/oauth2/authorize?client_id="+client_id+"&response_type=token&redirect_uri="+redirectUrl
+      window.location = authUrl
+    },
+    getTasks(){
+      this.syncWithDropBox()
+      return localStorage.tasks
+    },
+    syncWithDropBox(){
+      if(((localStorage.dropBoxToken !== undefined)||(localStorage.dropBoxToken!=='undefined')) && (localStorage.dropBoxMode == "enable")){
+        var request = new XMLHttpRequest();
+        request.open("POST","https://content.dropboxapi.com/2/files/download",true)
+        request.setRequestHeader("Authorization","Bearer "+localStorage.dropBoxToken)
+        request.setRequestHeader("Dropbox-API-Arg",'{"path": "/issues.json"}')
+        request.onload = function(){
+          if(request.status == 200){
+            localStorage.tasks = request.response
+          }else{
+            console.error('[DROPBOX]', 'Error downloading issues.json!!!!!!!!!')
+            console.error('[DROPBOX]', 'Server response code'+ request.status)
+            console.error('[DROPBOX]', 'Response: '+request.response)
+          }
+        }
+        request.send(null)
+      }
+    }
   },
   computed: {
     $bgStyle: {
@@ -85,6 +143,10 @@ Vue.mixin({
     $isMenuOpened: {
       get: function () { return globalData.$data.$isMenuOpened },
       set: function (newValue) { globalData.$data.$isMenuOpened = newValue}
+    },
+    $isDropBoxMode: {
+      get: function () { return globalData.$data.$isDropBoxMode },
+      set: function (newValue) { globalData.$data.$isDropBoxMode = newValue; localStorage.dropBoxMode = (newValue)?"enable":"disable"}
     }
   }
 })

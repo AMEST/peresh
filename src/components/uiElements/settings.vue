@@ -40,8 +40,9 @@ export default {
   },
   methods:{
       exportTasks: function () {
+        var self = this
         var a = document.createElement("a");
-        var file = new Blob([localStorage.tasks], {type: "text/plain"});
+        var file = new Blob([self.getTasks()], {type: "text/plain"});
         a.href = URL.createObjectURL(file);
         a.download = "tasks-"+new Date().toLocaleTimeString() + "-" + new Date().toLocaleDateString()+".json";
         a.id = "downloadA"
@@ -53,11 +54,13 @@ export default {
         }, 0); 
       },
       processFile(event) {
+          var self = this
           var uploadedFile = event.target.files[0];
           var reader = new FileReader()
           reader.onload = function() {
             alert("Import successful")
             localStorage.tasks = reader.result
+            self.uploadToDropBox()
             window.location.reload()
           }
           reader.readAsText(uploadedFile)

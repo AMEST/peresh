@@ -10,13 +10,13 @@
                     <button class="btn btn-outline-secondary btn-sm border-0 pr-2" data-toggle="tooltip" data-placement="bottom" v-bind:title="$Lang.createTask" @click="activeMenuItem = 'taskCreateView'"><font-awesome-icon icon="plus" /></button>
                     <div class="dropdown">
                         <button class="btn btn-outline-secondary dropdown-toggle btn-sm border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ $Lang.localProfile }}
+                            {{ ($isDropBoxMode)?dropBoxUser:$Lang.localProfile }}
                         </button>
                         <div class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton">
                             <a v-if="$bgStyle=='bg-light'" @click="$bgStyle='bg-dark'" class="dropdown-item" href="#">{{ $Lang.themeTumbler }} <font-awesome-icon icon="moon" /> </a><a v-else @click="$bgStyle='bg-light'" class="dropdown-item" href="#">{{ $Lang.themeTumbler }} <font-awesome-icon icon="sun" /> </a>
                             <a class="dropdown-item" href="#"  @click="activeMenuItem = 'settings'">{{ $Lang.settings }}</a>
-                            <a class="dropdown-item" href="#"  v-on:click="uploadToDropBox()">DropBox</a>
-                            <a class="dropdown-item" href="#">{{ $Lang.exit }}</a>
+                            <a v-if="!$isDropBoxMode" class="dropdown-item" href="#"  v-on:click="goAuthDropBox()">DropBox</a>
+                            <a v-if="$isDropBoxMode" class="dropdown-item" href="#" @click="$isDropBoxMode = false">{{ $Lang.exit }}</a>
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,12 @@
 </template>
 <script>
 export default {
-    name:"TopMenu"
+    name:"TopMenu",
+    computed:{
+        dropBoxUser:{
+            get:function(){return localStorage.dropBoxUser}
+        }
+    }
 }
 </script>
 <style>

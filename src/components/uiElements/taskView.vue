@@ -52,27 +52,30 @@ export default {
         },
         setArchived: function(){
             var self = this;
-            var allTasks = JSON.parse(localStorage.tasks);
+            var allTasks = JSON.parse(self.getTasks());
             self.currentTask.status = "archiv"
             allTasks[self.currentTask.id] = self.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
             self.$forceUpdate()
+            self.uploadToDropBox()
         },
         setRework: function(){
             var self = this;
-            var allTasks = JSON.parse(localStorage.tasks);
+            var allTasks = JSON.parse(self.getTasks());
             self.currentTask.status = "do"
             allTasks[self.currentTask.id] = self.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
             self.$forceUpdate()
+            self.uploadToDropBox()
         },
         setTrash: function(){
             var self = this;
-            var allTasks = JSON.parse(localStorage.tasks);
+            var allTasks = JSON.parse(self.getTasks());
             self.currentTask.isDeleted = true
             allTasks[self.currentTask.id] = self.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
             self.$forceUpdate()
+            self.uploadToDropBox()
         }
     },
     computed:{
