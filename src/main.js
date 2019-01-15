@@ -32,6 +32,7 @@ if ( params.access_token !== undefined ) {
   request.onload = function(){
     var profile = JSON.parse(request.response)
     localStorage.dropBoxUser = profile.name.display_name
+    localStorage.isAppStarted = true
     window.location = window.location.protocol +"//" + window.location.host
   }
   request.send(null)
