@@ -55,5 +55,6 @@
     "summary":"Summary",
     "title":"Task name",
     "tasksListNone":"Task list is empty, create a task",
-    "trashClean":"Recycle bin empty"
+    "trashClean":"Recycle bin empty",
+    "sync":"Synchronization"
 }

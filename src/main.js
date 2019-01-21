@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import langRu from './assets/lang_ru.json'
 import langEng from './assets/lang_en.json'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import './registerServiceWorker'
 /*
@@ -41,7 +41,7 @@ window.addEventListener('beforeinstallprompt', function (event) {
   console.log("prompt")
   event.prompt()
 })
-library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars)
+library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vue2TouchEvents)
 Vue.config.productionTip = false
@@ -72,7 +72,8 @@ let globalData = new Vue({
     $currentTask: {"title":"","summary":"","priority":"medium","status":"do","created":new Date().getTime(),"expiry":new Date().getTime()+16000},
     $isAppStarted: ((localStorage.isAppStarted === 'undefined') || (localStorage.isAppStarted === undefined) ? false : localStorage.isAppStarted),
     $isMenuOpened: false,
-    $isDropBoxMode: (localStorage.dropBoxMode == "enable")?true:false
+    $isDropBoxMode: (localStorage.dropBoxMode == "enable")?true:false,
+    $isSync: false
   }
 });
 
@@ -88,7 +89,9 @@ Vue.mixin({
         request.onload = () => {
           this.syncWithDropBox()
           console.log('[DBX]', request.response)
+          this.$isSynchronize = false
         }
+        this.$isSynchronize = true
         request.send(localStorage.tasks)
       }
     },
@@ -99,25 +102,42 @@ Vue.mixin({
       window.location = authUrl
     },
     getTasks(){
-      this.syncWithDropBox()
+      if(this.checkSleepTime())
+            this.syncWithDropBox()
       return localStorage.tasks
     },
     syncWithDropBox(){
       if(((localStorage.dropBoxToken !== undefined)||(localStorage.dropBoxToken!=='undefined')) && (localStorage.dropBoxMode == "enable")){
+        var selfThis = this;
         var request = new XMLHttpRequest();
         request.open("POST","https://content.dropboxapi.com/2/files/download",true)
         request.setRequestHeader("Authorization","Bearer "+localStorage.dropBoxToken)
         request.setRequestHeader("Dropbox-API-Arg",'{"path": "/issues.json"}')
         request.onload = function(){
           if(request.status == 200){
-            localStorage.tasks = request.response
+            localStorage.tasks = request.response;
+            selfThis.$isSynchronize = false;
+            console.log("[Sync2]",selfThis.$isSynchronize);
           }else{
             console.error('[DROPBOX]', 'Error downloading issues.json!!!!!!!!!')
             console.error('[DROPBOX]', 'Server response code'+ request.status)
             console.error('[DROPBOX]', 'Response: '+request.response)
           }
+          sessionStorage.syncTime = new Date().getTime()
         }
+        this.$isSynchronize = true
+        console.log("[Sync1]",this.$isSynchronize)
         request.send(null)
+      }
+    },
+    checkSleepTime(){
+      var oldTime = (sessionStorage.syncTime == undefined)?new Date().getTime():parseInt(sessionStorage.syncTime)
+      var curTime = new Date().getTime()
+      if((curTime - oldTime) < 5000 ){
+        return false
+      }else{
+        sessionStorage.syncTime = new Date().getTime()
+        return true
       }
     }
   },
@@ -148,6 +168,10 @@ Vue.mixin({
     $isDropBoxMode: {
       get: function () { return globalData.$data.$isDropBoxMode },
       set: function (newValue) { globalData.$data.$isDropBoxMode = newValue; localStorage.dropBoxMode = (newValue)?"enable":"disable"}
+    },
+    $isSynchronize: {
+      get: function () { return globalData.$data.$isSync },
+      set: function (newValue) { globalData.$data.$isSync = newValue}
     }
   }
 })

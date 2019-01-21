@@ -2,6 +2,7 @@
     <div>
         <top-menu/>
         <main class="h-100vh overflow-hidden mca" v-touch:swipe.right="swipeRight" v-touch:swipe.left="swipeLeft">
+            <div v-if="$isSynchronize" class="sync"><font-awesome-icon icon="sync" /> {{ $Lang.sync }}</div>
             <div class="container-fluid h-100 mx-auto max-fluid-container-width">
                 <div class="row h-100"> 
                     <div v-if="$isMenuOpened" class="ocmenu ocmenu-shadow inrow-menu d-lg-none pt-4 pr-0" v-bind:class="[$bgStyle]">
@@ -201,5 +202,13 @@ export default {
     }
     .overflow-hidden{
         overflow: hidden;
+    }
+    .sync{
+        width: 100%;
+        position: fixed;
+        background-color: rgba(255, 193, 7, 0.6);
+        bottom: 0px;
+        z-index: 9999;
+        padding-left: 15px;
     }
 </style>
