@@ -89,9 +89,7 @@ Vue.mixin({
         request.onload = () => {
           this.syncWithDropBox()
           console.log('[DBX]', request.response)
-          this.$isSynchronize = false
         }
-        this.$isSynchronize = true
         request.send(localStorage.tasks)
       }
     },
@@ -117,7 +115,6 @@ Vue.mixin({
           if(request.status == 200){
             localStorage.tasks = request.response;
             selfThis.$isSynchronize = false;
-            console.log("[Sync2]",selfThis.$isSynchronize);
           }else{
             console.error('[DROPBOX]', 'Error downloading issues.json!!!!!!!!!')
             console.error('[DROPBOX]', 'Server response code'+ request.status)
@@ -126,7 +123,6 @@ Vue.mixin({
           sessionStorage.syncTime = new Date().getTime()
         }
         this.$isSynchronize = true
-        console.log("[Sync1]",this.$isSynchronize)
         request.send(null)
       }
     },
