@@ -1,4 +1,4 @@
-FROM node:2.4-alpine
+FROM node:8-alpine
 COPY . /app
 COPY entrypoint.sh /usr/local/bin/
 WORKDIR /app
