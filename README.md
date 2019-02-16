@@ -17,14 +17,14 @@ npm run serve
 ```
 npm run build
 ```
-## Build Docker Image
-### Install Packages
+### Run express server
 ```
-npm install
+node express.js
 ```
-### Run build & launch docker image
+## Run build & launch docker image
 ```
-./DockerPeresh.sh
+ docker build -t peresh .
+ docker run -d --restart=always --name peresh -p 8080:3000 peresh
 ``` 
 ## For link Peresh to you own dropbox OAuth app
 `
