@@ -50,15 +50,16 @@ export default {
         a.click()
         setTimeout(function() {
             document.body.removeChild(a);
-            window.URL.revokeObjectURL(file);  
+            window.URL.revokeObjectURL(file);
         }, 0); 
+        self.showMessage(self.$Lang.push.export)  
       },
       processFile(event) {
           var self = this
           var uploadedFile = event.target.files[0];
           var reader = new FileReader()
           reader.onload = function() {
-            alert("Import successful")
+            self.showMessage(self.$Lang.push.import)  
             localStorage.tasks = reader.result
             self.uploadToDropBox()
             window.location.reload()

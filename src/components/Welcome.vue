@@ -3,10 +3,10 @@
     <div class="col text-center">
         <img alt="App logo" src="../assets/peresh.png">
         <h3>{{ msg }} {{ $AppName }}</h3>
-        <button type="button" class="btn btn-info welcome-element-width" @click="$isAppStarted=true">{{ $Lang.buttonGetStartedLocal }}</button><br>
+        <button type="button" class="btn btn-info welcome-element-width" @click="$isAppStarted=true" v-on:click="welcomeMess">{{ $Lang.buttonGetStartedLocal }}</button><br>
         <small class="text-muted welcome-element-width">{{ $Lang.localProfileSmall }}</small>
         <h5>{{ $Lang.or }}</h5>
-        <button type="button" class="btn btn-info welcome-element-width" v-on:click="goAuthDropBox()">{{ $Lang.buttonGetStartedDropBox }}</button><br>
+        <button type="button" class="btn btn-info welcome-element-width" v-on:click="goAuthDropBox();welcomeMess()">{{ $Lang.buttonGetStartedDropBox }}</button><br>
         <small class="text-muted welcome-element-width">{{ $Lang.dropboxProfileSmall }}</small>
         <div v-bind:class="[ themeButtonClass ]">
             <langButton/>
@@ -30,6 +30,11 @@ export default {
   data: function(){
       return {
           themeButtonClass: "light-tumbler"
+      }
+  },
+  methods:{
+      welcomeMess(){
+          this.showMessage(this.$Lang.fullAppName)
       }
   }
 };

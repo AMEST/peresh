@@ -32,9 +32,11 @@ export default {
             var allTasks = JSON.parse(self.getTasks());
             if( self.activeMenuItem ===  'trashCan'){
                 delete allTasks[self.selectedTask.id];
+                self.showMessage(self.$Lang.push.deleted)
             }else{
                 self.selectedTask.isDeleted = true;
                 allTasks[self.selectedTask.id] = self.selectedTask;
+                self.showMessage(self.$Lang.push.trashed)
             }
             localStorage.tasks = JSON.stringify(allTasks);
             var ami = self.activeMenuItem;

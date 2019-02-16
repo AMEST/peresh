@@ -135,6 +135,19 @@ Vue.mixin({
         sessionStorage.syncTime = new Date().getTime()
         return true
       }
+    },
+    showMessage(message){
+      var img = '/img/icons/nb-47-192.png';
+      if (Notification.permission === "granted") {
+        var notification = new Notification('Peresh', { body: message, icon: img });
+      }
+      else if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function (permission) {
+          if (permission === "granted") {
+            var notification = new Notification('Peresh', { body: message, icon: img });
+          }
+        });
+      }
     }
   },
   computed: {

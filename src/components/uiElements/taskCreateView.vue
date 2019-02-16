@@ -69,6 +69,7 @@ export default {
             allTasks[nameNewTask] = self.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
             self.uploadToDropBox()
+            self.showMessage(self.$Lang.push.created)
         },
         editTask: function(){
             var self = this;
@@ -76,6 +77,7 @@ export default {
             allTasks[self.currentTask.id] = self.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
             self.uploadToDropBox()
+            self.showMessage(self.$Lang.push.updated)
         },
         rand_name: function(){
             var chars = ["A","P","C","X","E","T","O","B"]

@@ -56,5 +56,15 @@
     "title":"Task name",
     "tasksListNone":"Task list is empty, create a task",
     "trashClean":"Recycle bin empty",
-    "sync":"Synchronization"
+    "sync":"Synchronization",
+    "push":{
+        "created":"Task created",
+        "updated":"Task updated",
+        "trashed":"Task moved to trash",
+        "deleted":"Task removed",
+        "rework":"Task was back work",
+        "archiv":"Task complited",
+        "import":"Import successfully completed",
+        "export":"Task export complited"
+    }
 }

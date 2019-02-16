@@ -58,6 +58,7 @@ export default {
             localStorage.tasks = JSON.stringify(allTasks)
             self.$forceUpdate()
             self.uploadToDropBox()
+            self.showMessage(self.$Lang.push.archiv)
         },
         setRework: function(){
             var self = this;
@@ -67,6 +68,7 @@ export default {
             localStorage.tasks = JSON.stringify(allTasks)
             self.$forceUpdate()
             self.uploadToDropBox()
+            self.showMessage(self.$Lang.push.rework)
         },
         setTrash: function(){
             var self = this;
@@ -76,6 +78,7 @@ export default {
             localStorage.tasks = JSON.stringify(allTasks)
             self.$forceUpdate()
             self.uploadToDropBox()
+            self.showMessage(self.$Lang.push.trashed)
         }
     },
     computed:{
