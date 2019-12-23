@@ -24,7 +24,7 @@ node express.js
 ## Run build & launch docker image
 ```
  docker build -t peresh .
- docker run -d --restart=always --name peresh -p 8080:3000 peresh
+ docker run -d --restart=always --name peresh -p 8080:80 peresh
 ``` 
 ## For link Peresh to you own dropbox OAuth app
 `

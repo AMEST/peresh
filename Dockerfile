@@ -1,10 +1,9 @@
-FROM node:10-alpine
-COPY . /app
-COPY entrypoint.sh /usr/local/bin/
-WORKDIR /app
+FROM node:10-alpine as build
+COPY . /build
+WORKDIR /build
 RUN chmod +x /usr/local/bin/entrypoint.sh;\
     npm install;\
     npm run build
 
-ENTRYPOINT ["entrypoint.sh"]
-CMD ["node", "express.js"]
+FROM nginx:1.17-alpine
+COPY --from=build /build/dist /usr/share/nginx/html
