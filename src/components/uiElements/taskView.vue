@@ -98,3 +98,8 @@ export default {
     }
 }
 </script>
+<style>
+code{
+    color: #e83e8c !important;
+}
+</style>

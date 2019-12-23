@@ -38,8 +38,11 @@ if ( params.access_token !== undefined ) {
   request.send(null)
 }
 window.addEventListener('beforeinstallprompt', function (event) {
-  console.log("prompt")
-  event.prompt()
+  if((localStorage.installPrompt === undefined) || (localStorage.installPrompt === 'undefined')){
+    localStorage.installPrompt = "success"
+    console.log("[beforeinstallprompt]","prompt")
+    event.prompt()
+  }
 })
 library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faRecycle , faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
