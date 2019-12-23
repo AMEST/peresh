@@ -30,11 +30,12 @@
         "tasksList": {"icon":"tasks","text":"List of active tasks"},
         "tasksToday": {"icon":"calendar","text":"Tasks for today"},
         "tasksTomorrow": {"icon":"calendar-alt","text":"Tasks for tomorrow"},
-        "archiveTasks": {"icon":"archive","text":"List of archived tasks"},
+        "archiveTasks": {"icon":"archive","text":"List of complited tasks"},
         "trashCan": {"icon":"trash","text":"Trash can"}
     },
     "removeData":"Remove app data",
     "deleteTask":"Delete task",
+    "restoreTask":"Restore task",
     "save":"Save",
     "editTask":"Edit task",
     "complited":"Complited",
@@ -65,6 +66,7 @@
         "rework":"Task was back work",
         "archiv":"Task complited",
         "import":"Import successfully completed",
-        "export":"Task export complited"
+        "export":"Task export complited",
+        "restored":"Task Restored"
     }
 }

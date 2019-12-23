@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import langRu from './assets/lang_ru.json'
 import langEng from './assets/lang_en.json'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faRecycle, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import './registerServiceWorker'
 /*
@@ -41,7 +41,7 @@ window.addEventListener('beforeinstallprompt', function (event) {
   console.log("prompt")
   event.prompt()
 })
-library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync)
+library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faRecycle , faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vue2TouchEvents)
 Vue.config.productionTip = false

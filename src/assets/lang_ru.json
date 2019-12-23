@@ -30,11 +30,12 @@
         "tasksList": {"icon":"tasks","text":"Список активных задач"},
         "tasksToday": {"icon":"calendar","text":"Задачи на сегодня"},
         "tasksTomorrow": {"icon":"calendar-alt","text":"Задачи на завтра"},
-        "archiveTasks": {"icon":"archive","text":"Список архивных задач"},
+        "archiveTasks": {"icon":"archive","text":"Список закрытых задач"},
         "trashCan": {"icon":"trash","text":"Корзина"}
     },
     "removeData":"Удалить данные",
     "deleteTask":"Удалить задачу",
+    "restoreTask":"Восстановить задачу",
     "save":"Сохранить",
     "editTask":"Редактировать задачу",
     "complited":"Сделано",
@@ -65,6 +66,7 @@
         "rework":"Задача возвращена в работу",
         "archiv":"Задача завершена",
         "import":"Импорт успешно завершен",
-        "export":"Экспорт задач завершен"
+        "export":"Экспорт задач завершен",
+        "restored":"Задача восстановлена"
     }
 }

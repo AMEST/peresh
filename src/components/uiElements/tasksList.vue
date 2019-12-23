@@ -12,10 +12,11 @@
         </div>
         <ul class="list-group">
             <li v-for="(item,key) in tasks" :key="item,key" v-bind:id="item.id" class="list-group-item d-flex justify-content-between align-items-center" v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item bg-dark': 'light-item']">
-                <span class="pointer" v-if="activeMenuItem != 'trashCan'"  @click="currentTask = item, activeMenuItem = 'taskView'">{{ item.title }}</span>
+                <span class="pointer roundedTitle" v-if="activeMenuItem != 'trashCan'"  @click="currentTask = item, activeMenuItem = 'taskView'">{{ item.title }}</span>
                 <span v-else >{{ item.title }}</span>
                 <div>
                 <button class="btn btn-outline-secondary btn-sm border-0 pr-2 mr-2" data-toggle="tooltip" data-placement="bottom" v-if="activeMenuItem != 'trashCan'"  v-bind:title="$Lang.editTask" @click="currentTask = item, activeMenuItem = 'taskEditView'"><font-awesome-icon icon="pen" /></button>
+                <button class="btn btn-outline-secondary btn-sm border-0 pr-2" data-toggle="tooltip" data-placement="bottom"  v-if="activeMenuItem == 'trashCan'" v-bind:title="$Lang.restoreTask" @click="selectedTask = item" v-on:click="setRestore"><font-awesome-icon icon="recycle" /></button>
                 <button class="btn btn-outline-secondary btn-sm border-0 pr-2" data-toggle="tooltip" data-placement="bottom" v-bind:title="$Lang.deleteTask" @click="selectedTask = item" v-on:click="setTrash"><font-awesome-icon icon="trash" /></button>
                 </div>
             </li>
@@ -45,6 +46,22 @@ export default {
             self.activeMenuItem = ami;
             self.$forceUpdate();
             self.uploadToDropBox()
+        },
+        setRestore: function(task){
+            var self = this;
+            var allTasks = JSON.parse(self.getTasks());
+            if( self.activeMenuItem ===  'trashCan'){
+                self.selectedTask.isDeleted = false;
+                allTasks[self.selectedTask.id] = self.selectedTask;
+                self.showMessage(self.$Lang.push.restored)
+            }
+            localStorage.tasks = JSON.stringify(allTasks);
+            var ami = self.activeMenuItem;
+            self.activeMenuItem = "blank";
+            self.$forceUpdate();
+            self.activeMenuItem = ami;
+            self.$forceUpdate();
+            self.uploadToDropBox()
         }
     }
 }
@@ -55,5 +72,11 @@ export default {
     }
     .pb-for-oneline{
         padding-bottom: 60px;
+    }
+    .roundedTitle{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 75%;
     }
 </style>

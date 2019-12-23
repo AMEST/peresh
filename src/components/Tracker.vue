@@ -1,7 +1,7 @@
 <template>
     <div>
         <top-menu/>
-        <main class="h-100vh overflow-hidden mca" v-touch:swipe.right="swipeRight" v-touch:swipe.left="swipeLeft">
+        <main class="overflow-hidden mca" v-touch:swipe.right="swipeRight" v-touch:swipe.left="swipeLeft">
             <div v-if="$isSynchronize" class="sync"><font-awesome-icon icon="sync" /> {{ $Lang.sync }}</div>
             <div class="container-fluid h-100 mx-auto max-fluid-container-width">
                 <div class="row h-100"> 
@@ -19,7 +19,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col work-shadow pt-4 enable-scroll">
+                    <div class=" min-100vh col work-shadow pt-4 enable-scroll">
                         <div v-if="activeMenuItem == 'tasksList'"> <tasks-list v-bind:title="$Lang.menu.tasksList.text" v-bind:tasks="getActiveTasks()"/> </div>
                         <div v-else-if="activeMenuItem == 'tasksToday'"> <tasks-list v-bind:title="$Lang.menu.tasksToday.text" v-bind:tasks="tasksOnDay(0)"/> </div>
                         <div v-else-if="activeMenuItem == 'tasksTomorrow'"> <tasks-list v-bind:title="$Lang.menu.tasksTomorrow.text" v-bind:tasks="tasksOnDay(86400000)"/> </div>
@@ -56,57 +56,57 @@ export default {
   },
   methods:{
       getItems: function(){
-          return ["1","2","3",Date()];
+        return ["1","2","3",Date()];
       },
       getActiveTasks: function(){
-          var self = this
-          var allTasks = JSON.parse(self.getTasks());
-          var newTList = [];
-          for(var key in allTasks){
-              if((allTasks[key].status == "do") && ((allTasks[key].isDeleted == undefined) || (allTasks[key].isDeleted == false)))
-                newTList.push(allTasks[key])
-          }
-          return this.sortTasks(newTList,false);
+        var self = this
+        var allTasks = JSON.parse(self.getTasks());
+        var newTList = [];
+        for(var key in allTasks){
+            if((allTasks[key].status == "do") && ((allTasks[key].isDeleted == undefined) || (allTasks[key].isDeleted == false)))
+            newTList.push(allTasks[key])
+        }
+        return this.sortTasks(newTList,false);
       },
       getArchivedTasks: function(){
-          var self = this
-          var allTasks = JSON.parse(self.getTasks());
-          var newTList = [];
-          for(var key in allTasks){
-              if((allTasks[key].status == "archiv") && ((allTasks[key].isDeleted == undefined) || (allTasks[key].isDeleted == false)))
-                newTList.push(allTasks[key])
-          }
-          return this.sortTasks(newTList,false);
+        var self = this
+        var allTasks = JSON.parse(self.getTasks());
+        var newTList = [];
+        for(var key in allTasks){
+            if((allTasks[key].status == "archiv") && ((allTasks[key].isDeleted == undefined) || (allTasks[key].isDeleted == false)))
+            newTList.push(allTasks[key])
+        }
+        return this.sortTasks(newTList,false);
       },
       getTrashCan: function(){
-          var self = this
-          var allTasks = JSON.parse(self.getTasks());
-          var newTList = [];
-          for(var key in allTasks){
-              if(allTasks[key].isDeleted)
-                newTList.push(allTasks[key])
-          }
-          return this.sortTasks(newTList,false);
+        var self = this
+        var allTasks = JSON.parse(self.getTasks());
+        var newTList = [];
+        for(var key in allTasks){
+            if(allTasks[key].isDeleted)
+            newTList.push(allTasks[key])
+        }
+        return this.sortTasks(newTList,false);
       },
       test: function(){
-          var self = this;
-          self.$forceUpdate();
+        var self = this;
+        self.$forceUpdate();
       },
       getMenu: function(){
-          var self = this;
-          return self.$Lang.menu;
+        var self = this;
+        return self.$Lang.menu;
       },
       sortTasks: function(tlist, isMap){
-          var newTList = [];
-          if(isMap){
+        var newTList = [];
+        if(isMap){
             for(var key in tlist){
                 newTList.push(tlist[key])
             }
-          }else{
-              newTList = tlist
-          }
-          var b = undefined;
-          for(var j = 0; j < newTList.length; j++){
+        }else{
+            newTList = tlist
+        }
+        var b = undefined;
+        for(var j = 0; j < newTList.length; j++){
             for(var i = 0; i < newTList.length-1;i++ ){
                 if( parseInt(newTList[i].created) < parseInt(newTList[i+1].created)){
                     b = newTList[i]
@@ -114,39 +114,39 @@ export default {
                     newTList[i+1] = b
                 }
             }
-          }
-          return newTList
+        }
+        return newTList
       },
       tasksOnDay: function(dayOffset){
-          var self = this
-          var tlist = JSON.parse(self.getTasks());
-          var newTList = [];
-          var ds = new Date();
-          ds.setHours(0,0,0,0)
-          var de = new Date();
-          de.setHours(23,59,59)
-          for(var key in tlist){
-              var task = tlist[key]
-              if(( parseInt(task.expiry) >= (ds.getTime()+dayOffset)) && (parseInt(task.expiry) <= (de.getTime()+dayOffset)) && (tlist[key].status == "do") && ((tlist[key].isDeleted == undefined) || (tlist[key].isDeleted == false))){
-                newTList.push(task)
-              }
-          }
-          return this.sortTasks(newTList,false)
+        var self = this
+        var tlist = JSON.parse(self.getTasks());
+        var newTList = [];
+        var ds = new Date();
+        ds.setHours(0,0,0,0)
+        var de = new Date();
+        de.setHours(23,59,59)
+        for(var key in tlist){
+            var task = tlist[key]
+            if(( parseInt(task.expiry) >= (ds.getTime()+dayOffset)) && (parseInt(task.expiry) <= (de.getTime()+dayOffset)) && (tlist[key].status == "do") && ((tlist[key].isDeleted == undefined) || (tlist[key].isDeleted == false))){
+            newTList.push(task)
+            }
+        }
+        return this.sortTasks(newTList,false)
       },
       swipeRight: function(){
-          var self = this;
-          console.log('[Swipe]', 'Right')
-          console.log(self)
-          self.$isMenuOpened = true;
+        var self = this;
+        console.log('[Swipe]', 'Right')
+        console.log(self)
+        self.$isMenuOpened = true;
       },
       swipeLeft: function(){
-          var self = this;
-          self.$isMenuOpened = false;
+        var self = this;
+        self.$isMenuOpened = false;
       }
   },
   created: function(){
-      var self = this
-      self.syncWithDropBox()
+    var self = this
+    self.syncWithDropBox()
   }
 }
 </script>
@@ -157,6 +157,9 @@ export default {
     }
     .h-100vh{
         height: 100vh;
+    }
+    .min-100vh{
+        min-height: 100vh!important;
     }
     .light-tumbler{
         position: fixed;
