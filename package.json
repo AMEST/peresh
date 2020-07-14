@@ -16,7 +16,7 @@
     "bootstrap": "^4.4.1",
     "dropbox": "^4.0.14",
     "express": "^4.16.4",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.14.4",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.17",
