@@ -13,7 +13,7 @@
                             {{ ($isDropBoxMode)?dropBoxUser:$Lang.localProfile }}
                         </button>
                         <div class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton">
-                            <a v-if="$bgStyle=='bg-light'" @click="$bgStyle='bg-dark'" class="dropdown-item" href="#">{{ $Lang.themeTumbler }} <font-awesome-icon icon="moon" /> </a><a v-else @click="$bgStyle='bg-light'" class="dropdown-item" href="#">{{ $Lang.themeTumbler }} <font-awesome-icon icon="sun" /> </a>
+                            <a v-if="$bgStyle=='bg-light'" @click="$bgStyle='bg-dark';uploadToDropBox()" class="dropdown-item" href="#">{{ $Lang.themeTumbler }} <font-awesome-icon icon="moon" /> </a><a v-else @click="$bgStyle='bg-light'" class="dropdown-item" href="#">{{ $Lang.themeTumbler }} <font-awesome-icon icon="sun" /> </a>
                             <a class="dropdown-item" href="#"  @click="activeMenuItem = 'settings'">{{ $Lang.settings }}</a>
                             <a v-if="!$isDropBoxMode" class="dropdown-item" href="#"  v-on:click="goAuthDropBox()">DropBox</a>
                             <a v-if="$isDropBoxMode" class="dropdown-item" href="#" @click="$isDropBoxMode = false">{{ $Lang.exit }}</a>

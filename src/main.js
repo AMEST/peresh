@@ -9,185 +9,146 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faRecycle, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import './registerServiceWorker'
+import dropboxClient from '@/dropbox'
+import utils from '@/utils'
+
+const issuesFileName = "issues.json"
+const settingsFileName = "settings.json"
 /*
 *
 * Configuration init
 *
 */
+
 // Parse data in hash
-var hash = window.location.hash.substring(1)
-var params = {}
-hash.split('&').map(hk => {
-  let temp = hk.split('=')
-  params[temp[0]] = temp[1]
-})
-/*eslint-disable */
+var params = utils.parseHash()
 // Write dropbox access token to local storage & reload page
-if ( params.access_token !== undefined ) {
-  localStorage.dropBoxToken = params.access_token
-  localStorage.dropBoxMode = "enable"
-  var request = new XMLHttpRequest();
-  request.open("POST","https://api.dropboxapi.com/2/users/get_current_account",true)
-  request.setRequestHeader("Authorization","Bearer "+localStorage.dropBoxToken)
-  request.onload = function(){
-    var profile = JSON.parse(request.response)
-    localStorage.dropBoxUser = profile.name.display_name
-    localStorage.isAppStarted = true
-    window.location = window.location.protocol +"//" + window.location.host
-  }
-  request.send(null)
+if (params.access_token !== undefined) {
+  dropboxClient.auth(params.access_token)
 }
-window.addEventListener('beforeinstallprompt', function (event) {
-  if((localStorage.installPrompt === undefined) || (localStorage.installPrompt === 'undefined')){
-    localStorage.installPrompt = "success"
-    console.log("[beforeinstallprompt]","prompt")
-    event.prompt()
-  }
-})
-library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faRecycle , faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync)
+utils.installPrompt()
+utils.useDefaults()
+
+if (dropboxClient.active()) {
+  dropboxClient.download(settingsFileName, (response) => {
+    var settings = JSON.parse(response)
+    utils.setSettings(settings)
+  }, false, (request) => {
+    dropboxClient.upload(settingsFileName, JSON.stringify(utils.getSettings()))
+    console.info('[INIT]', 'Settings not found in dropbox, use defaults')
+  })
+}
+
+library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faRecycle, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vue2TouchEvents)
 Vue.config.productionTip = false
-//Set Language
-var lang = undefined
-if (localStorage.lang === 'ru') {
+
+// Set Language
+var lang
+if (utils.getSettings().lang === 'ru') {
   lang = langRu
 } else {
   lang = langEng
 }
-//Set default theme
-if ((localStorage.bgStyle === undefined) || (localStorage.bgStyle === 'undefined')) {
-  localStorage.bgStyle = 'bg-light'
-}
-//Set default tasks
-if ((localStorage.tasks === undefined) || (localStorage.tasks === 'undefined')) {
-  localStorage.tasks = JSON.stringify({})
-}
-//Set default dropBox mode
-if ((localStorage.dropBoxMode === undefined) || (localStorage.dropBoxMode === 'undefined')) {
-  localStorage.dropBoxMode = "disable"
-}
+
+/*eslint-disable*/
 let globalData = new Vue({
   data: {
-    $activeMenuItem: "TrackerMain",//((sessionStorage.activeMenuItem === 'undefined')||(sessionStorage.activeMenuItem === undefined)) ? 'TrackerMain' : sessionStorage.activeMenuItem,
-    $bgStyle: localStorage.bgStyle,
+    $activeMenuItem: utils.getActiveItemFromSession(),
+    $bgStyle: utils.getSettings().bgStyle,
     $AppName: 'Peresh',
-    $currentTask: {"title":"","summary":"","priority":"medium","status":"do","created":new Date().getTime(),"expiry":new Date().getTime()+16000},
-    $isAppStarted: ((localStorage.isAppStarted === 'undefined') || (localStorage.isAppStarted === undefined) ? false : localStorage.isAppStarted),
+    $currentTask: { "title": "", "summary": "", "priority": "medium", "status": "do", "created": new Date().getTime(), "expiry": new Date().getTime() + 16000 },
+    $isAppStarted: utils.isAppStarted(),
     $isMenuOpened: false,
-    $isDropBoxMode: (localStorage.dropBoxMode == "enable")?true:false,
+    $isDropBoxMode: dropboxClient.enabled(),
     $isSync: false
   }
 });
-
+/* eslint-enable */
 Vue.mixin({
   methods: {
-    uploadToDropBox() {
-      if((localStorage.dropBoxToken !== undefined)||(localStorage.dropBoxToken!=='undefined') && (localStorage.dropBoxMode == "enable")){
-        var request = new XMLHttpRequest();
-        request.open("POST","https://content.dropboxapi.com/2/files/upload",true)
-        request.setRequestHeader("Authorization","Bearer "+localStorage.dropBoxToken)
-        request.setRequestHeader("Dropbox-API-Arg",'{"path": "/issues.json","mode": "overwrite","autorename": false,"mute": false,"strict_conflict": false}')
-        request.setRequestHeader("Content-Type",'application/octet-stream')
-        request.onload = () => {
-          this.syncWithDropBox()
-          console.log('[DBX]', request.response)
-        }
-        request.send(localStorage.tasks)
+    uploadToDropBox(async = true) {
+      if (dropboxClient.active()) {
+        dropboxClient.upload(issuesFileName, window.localStorage.tasks, () => this.syncWithDropBox(), async)
+        dropboxClient.upload(settingsFileName, JSON.stringify(utils.getSettings()), () => this.syncWithDropBox, async)
       }
     },
-    goAuthDropBox(){
-      var redirectUrl = window.location.protocol +"//" + window.location.host
-      var client_id = "3pap37yp0kr2bei"
-      var authUrl = "https://www.dropbox.com/oauth2/authorize?client_id="+client_id+"&response_type=token&redirect_uri="+redirectUrl
-      window.location = authUrl
+    goAuthDropBox() {
+      dropboxClient.redirectToAuth()
     },
-    getTasks(){
-      if(this.checkSleepTime())
-            this.syncWithDropBox()
-      return localStorage.tasks
+    getTasks() {
+
+      if (this.checkSleepTime()) {
+        this.syncWithDropBox()
+      }
+      return window.localStorage.tasks
     },
-    syncWithDropBox(){
-      if(((localStorage.dropBoxToken !== undefined)||(localStorage.dropBoxToken!=='undefined')) && (localStorage.dropBoxMode == "enable")){
-        var selfThis = this;
-        var request = new XMLHttpRequest();
-        request.open("POST","https://content.dropboxapi.com/2/files/download",true)
-        request.setRequestHeader("Authorization","Bearer "+localStorage.dropBoxToken)
-        request.setRequestHeader("Dropbox-API-Arg",'{"path": "/issues.json"}')
-        request.onload = function(){
-          if(request.status == 200){
-            localStorage.tasks = request.response;
-            selfThis.$isSynchronize = false;
-          }else{
-            console.error('[DROPBOX]', 'Error downloading issues.json!!!!!!!!!')
-            console.error('[DROPBOX]', 'Server response code'+ request.status)
-            console.error('[DROPBOX]', 'Response: '+request.response)
-          }
-          sessionStorage.syncTime = new Date().getTime()
-        }
+    syncWithDropBox() {
+      if (dropboxClient.active()) {
+        var selfThis = this
+        dropboxClient.download(issuesFileName, (response) => {
+          window.localStorage.tasks = response
+          selfThis.$isSynchronize = false
+          window.sessionStorage.syncTime = new Date().getTime()
+        })
+        dropboxClient.download(settingsFileName, (response) => {
+          var settings = JSON.parse(response)
+          utils.setSettings(settings)
+          selfThis.$isSynchronize = false
+          window.sessionStorage.syncTime = new Date().getTime()
+        })
         this.$isSynchronize = true
-        request.send(null)
       }
     },
-    checkSleepTime(){
-      var oldTime = (sessionStorage.syncTime == undefined)?new Date().getTime():parseInt(sessionStorage.syncTime)
+    checkSleepTime() {
+      var oldTime = (window.sessionStorage.syncTime == undefined) ? new Date().getTime() : parseInt(window.sessionStorage.syncTime)
       var curTime = new Date().getTime()
-      if((curTime - oldTime) < 5000 ){
+      if ((curTime - oldTime) < 5000) {
         return false
-      }else{
-        sessionStorage.syncTime = new Date().getTime()
+      } else {
+        window.sessionStorage.syncTime = new Date().getTime()
         return true
       }
     },
-    showMessage(message){
-      var img = '/img/icons/nb-47-192.png';
-      if (Notification.permission === "granted") {
-        var notification = new Notification('Peresh', { body: message, icon: img });
-      }
-      else if (Notification.permission !== 'denied') {
-        Notification.requestPermission(function (permission) {
-          if (permission === "granted") {
-            var notification = new Notification('Peresh', { body: message, icon: img });
-          }
-        });
-      }
+    showMessage(message) {
+      utils.showNotification(message)
     }
   },
   computed: {
     $bgStyle: {
       get: function () { return globalData.$data.$bgStyle },
-      set: function (newColor) { globalData.$data.$bgStyle = newColor; localStorage.bgStyle = newColor }
+      set: function (newColor) { globalData.$data.$bgStyle = newColor; window.localStorage.bgStyle = newColor }
     },
     $textStyle: { get: function () { return (globalData.$data.$bgStyle === 'bg-dark') ? 'text-light' : 'text-dark' } },
     $AppName: { get: function () { return globalData.$data.$AppName } },
     $Lang: { get: function () { return lang } },
     $isAppStarted: {
       get: function () { return globalData.$data.$isAppStarted },
-      set: function (newValue) { globalData.$data.$isAppStarted = newValue; localStorage.isAppStarted = newValue }
+      set: function (newValue) { globalData.$data.$isAppStarted = newValue; window.localStorage.isAppStarted = newValue }
     },
     activeMenuItem: {
       get: function () { return globalData.$data.$activeMenuItem },
-      set: function (newValue) { globalData.$data.$activeMenuItem = newValue; sessionStorage.activeMenuItem = newValue }
+      set: function (newValue) { globalData.$data.$activeMenuItem = newValue; window.sessionStorage.activeMenuItem = newValue }
     },
     currentTask: {
       get: function () { return globalData.$data.$currentTask },
-      set: function (newValue) { globalData.$data.$currentTask = newValue; sessionStorage.currentTask = JSON.stringify(newValue)}
+      set: function (newValue) { globalData.$data.$currentTask = newValue; window.sessionStorage.currentTask = JSON.stringify(newValue) }
     },
     $isMenuOpened: {
       get: function () { return globalData.$data.$isMenuOpened },
-      set: function (newValue) { globalData.$data.$isMenuOpened = newValue}
+      set: function (newValue) { globalData.$data.$isMenuOpened = newValue }
     },
     $isDropBoxMode: {
       get: function () { return globalData.$data.$isDropBoxMode },
-      set: function (newValue) { globalData.$data.$isDropBoxMode = newValue; localStorage.dropBoxMode = (newValue)?"enable":"disable"}
+      set: function (newValue) { globalData.$data.$isDropBoxMode = newValue; window.localStorage.dropBoxMode = (newValue) ? "enable" : "disable" }
     },
     $isSynchronize: {
       get: function () { return globalData.$data.$isSync },
-      set: function (newValue) { globalData.$data.$isSync = newValue}
+      set: function (newValue) { globalData.$data.$isSync = newValue }
     }
   }
 })
-/* eslint-enable */
 /*
 *
 * Application Init
