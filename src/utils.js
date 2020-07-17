@@ -54,6 +54,11 @@ var utils = {
             ? 'TrackerMain'
             : sessionStorage.activeMenuItem
     },
+    getCurrentTaskFromSession: () => {
+        return ((window.sessionStorage.currentTask === 'undefined') || (window.sessionStorage.currentTask === undefined))
+        ? { "title": "", "summary": "", "priority": "medium", "status": "do", "created": new Date().getTime(), "expiry": new Date().getTime() + 16000 }
+        : JSON.parse(window.sessionStorage.currentTask)
+    },
     isAppStarted: () => {
         return ((localStorage.isAppStarted === 'undefined') || (localStorage.isAppStarted === undefined) 
             ? false 

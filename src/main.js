@@ -33,8 +33,10 @@ if (dropboxClient.active()) {
   dropboxClient.download(settingsFileName, (response) => {
     var settings = JSON.parse(response)
     utils.setSettings(settings)
+    // eslint-disable-next-line
   }, false, (request) => {
     dropboxClient.upload(settingsFileName, JSON.stringify(utils.getSettings()))
+    // eslint-disable-next-line
     console.info('[INIT]', 'Settings not found in dropbox, use defaults')
   })
 }
@@ -58,7 +60,7 @@ let globalData = new Vue({
     $activeMenuItem: utils.getActiveItemFromSession(),
     $bgStyle: utils.getSettings().bgStyle,
     $AppName: 'Peresh',
-    $currentTask: { "title": "", "summary": "", "priority": "medium", "status": "do", "created": new Date().getTime(), "expiry": new Date().getTime() + 16000 },
+    $currentTask: utils.getCurrentTaskFromSession(),
     $isAppStarted: utils.isAppStarted(),
     $isMenuOpened: false,
     $isDropBoxMode: dropboxClient.enabled(),
