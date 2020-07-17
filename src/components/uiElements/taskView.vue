@@ -33,7 +33,7 @@
         <div class="row mt-2">
             <div class="col"> 
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped" role="progressbar" v-bind:class="[taskProgress.bg]" v-bind:style="[taskProgress.style]"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" v-bind:class="[taskProgress.bg]" v-bind:style="[taskProgress.style]"></div>
                 </div>
             </div>
         </div>
@@ -115,6 +115,7 @@ export default {
                 var background = (currentPercent < 35)
                     ? "bg-info"
                     : (currentPercent < 70) ? "bg-warning" : "bg-danger"
+                background = (this.currentTask.status === "archiv")? "bg-success" : background
                 return {
                     "style":{
                             "width":currentPercent + "%"
