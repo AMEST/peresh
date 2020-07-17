@@ -28,6 +28,16 @@
             <div class="col">{{ $Lang.endDate }}:  <span class="float-right">{{ getExpiry() }}</span></div>
         </div>
         <div class="row mt-2">
+            <div class="col"> {{ $Lang.progress }}: </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col"> 
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" v-bind:class="[taskProgress.bg]" v-bind:style="[taskProgress.style]"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
             <div v-if="currentTask.summary" class="col"> {{ $Lang.summary }}: </div>
         </div>
         <div class="row ml-3">
@@ -79,19 +89,37 @@ export default {
             self.$forceUpdate()
             self.uploadToDropBox()
             self.showMessage(self.$Lang.push.trashed)
+            self.activeMenuItem = "trashCan"
         }
     },
     computed:{
         priorityColor: {
             get: function(){
-                if(this.currentTask.priority == "low"){
-                    return "badge-secondary"
-                }else{
-                    if(this.currentTask.priority == "medium"){
+                switch (this.currentTask.priority) {
+                    case "low":
+                        return "badge-secondary"
+                    case "medium":
                         return "badge-warning"
-                    }else{
+                    case "hight":
                         return "badge-danger"
-                    }
+                    default:
+                        return "badge-secondary"
+                }
+            }
+        },
+        taskProgress:{
+            get: function() {
+                var max = new Date(parseInt(this.currentTask.expiry)) - new Date(parseInt(this.currentTask.created))
+                var current = new Date(parseInt(this.currentTask.expiry)) - new Date()
+                var currentPercent = Math.abs(100 - (( current * 100 ) / max))
+                var background = (currentPercent < 35)
+                    ? "bg-info"
+                    : (currentPercent < 70) ? "bg-warning" : "bg-danger"
+                return {
+                    "style":{
+                            "width":currentPercent + "%"
+                    },
+                    "bg":background
                 }
             }
         }
