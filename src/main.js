@@ -63,7 +63,7 @@ let globalData = new Vue({
     $currentTask: utils.getCurrentTaskFromSession(),
     $isAppStarted: utils.isAppStarted(),
     $isMenuOpened: false,
-    $isDropBoxMode: dropboxClient.enabled(),
+    $isDropBoxMode: dropboxClient.isEnabled(),
     $isSync: false
   }
 });

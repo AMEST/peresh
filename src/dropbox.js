@@ -2,11 +2,11 @@
 var dropboxClientId = "3pap37yp0kr2bei"
 
 var dropboxClient = {
-    enabled: () => {
+    isEnabled: () => {
         return (localStorage.dropBoxMode == "enable") ? true : false
     },
     active: () => {
-        return ((localStorage.dropBoxToken !== undefined) || (localStorage.dropBoxToken !== 'undefined')) && dropboxClient.enabled()
+        return ((localStorage.dropBoxToken !== undefined) || (localStorage.dropBoxToken !== 'undefined')) && dropboxClient.isEnabled()
     },
     redirectToAuth: () => {
         var redirectUrl = window.location.protocol + "//" + window.location.host
