@@ -33,7 +33,7 @@
         <div class="row mt-2">
             <div class="col"> 
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" v-bind:class="[taskProgress.bg]" v-bind:style="[taskProgress.style]"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" v-bind:class="[taskProgress.bg]" v-bind:style="[taskProgress.style]"> {{ taskProgress.days }} {{$Lang.days}}</div>
                 </div>
             </div>
         </div>
@@ -112,6 +112,7 @@ export default {
                 var max = new Date(parseInt(this.currentTask.expiry)) - new Date(parseInt(this.currentTask.created))
                 var current = new Date(parseInt(this.currentTask.expiry)) - new Date()
                 var currentPercent = Math.abs(100 - (( current * 100 ) / max))
+                var currentDays = Math.round(current / 1000 / 60 / 60 / 24)
                 var background = (currentPercent < 35)
                     ? "bg-info"
                     : (currentPercent < 70) ? "bg-warning" : "bg-danger"
@@ -120,7 +121,8 @@ export default {
                     "style":{
                             "width":currentPercent + "%"
                     },
-                    "bg":background
+                    "bg":background,
+                    "days": currentDays
                 }
             }
         }

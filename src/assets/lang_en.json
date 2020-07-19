@@ -69,5 +69,6 @@
         "import":"Import successfully completed",
         "export":"Task export complited",
         "restored":"Task Restored"
-    }
+    },
+    "days":"d."
 }
