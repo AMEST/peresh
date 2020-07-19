@@ -40,7 +40,7 @@
 <script>
 import TopMenu from './uiElements/TopMenu.vue'
 import defaultWorkBlock from './uiElements/defaultWorkBlock.vue'
-import settings from './uiElements/settings.vue'
+import settings from './settings/settings.vue'
 import tasksList from './uiElements/tasksList.vue'
 import taskView from './uiElements/taskView.vue'
 import taskCreateView from './uiElements/taskCreateView.vue'

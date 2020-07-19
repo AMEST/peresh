@@ -13,6 +13,7 @@
     "darkTheme": "Включить темную тему",
     "themeTumbler":"Переключить тему",
     "theme":"Тема",
+    "customStatuses": "Кастомные статусы",
     "export":{
         "label":"Экспорт задач",
         "button":"Экспорт"
@@ -45,6 +46,7 @@
         "do":"Выполняется",
         "archiv":"В архиве"
     },
+    "changeToCustomStatus": "Перевести в",
     "priority":{
         "priority":"Приоритет",
         "hight":"Высокий",

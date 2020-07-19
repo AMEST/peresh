@@ -16,8 +16,8 @@
   </div>
 </template>
 <script>
-import langButton from './uiElements/langButton.vue'
-import themeChangeButton from './uiElements/themeChangeButton.vue'
+import langButton from './settings/langButton.vue'
+import themeChangeButton from './settings/themeChangeButton.vue'
 export default {
   name: "Welcome",
   props: {

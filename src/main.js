@@ -61,6 +61,7 @@ let globalData = new Vue({
     $bgStyle: utils.getSettings().bgStyle,
     $AppName: 'Peresh',
     $currentTask: utils.getCurrentTaskFromSession(),
+    $customStatuses: utils.getSettings().statuses,
     $isAppStarted: utils.isAppStarted(),
     $isMenuOpened: false,
     $isDropBoxMode: dropboxClient.isEnabled(),
@@ -136,6 +137,10 @@ Vue.mixin({
     currentTask: {
       get: function () { return globalData.$data.$currentTask },
       set: function (newValue) { globalData.$data.$currentTask = newValue; window.sessionStorage.currentTask = JSON.stringify(newValue) }
+    },
+    customStatuses: {
+      get: function () { return globalData.$data.$customStatuses },
+      set: function (newValue) { globalData.$data.$customStatuses = newValue; window.sessionStorage.customStatuses = JSON.stringify(newValue) }
     },
     $isMenuOpened: {
       get: function () { return globalData.$data.$isMenuOpened },

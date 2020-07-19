@@ -9,6 +9,15 @@
                 <div align="right">
                     <button v-if="currentTask.status == 'do'" class="btn btn-outline-secondary btn-sm border-0 pr-2 mr-2" data-toggle="tooltip" data-placement="bottom" v-bind:title="$Lang.editTask" v-on:click="setArchived"> {{ $Lang.complited }} </button>
                     <button v-else class="btn btn-outline-secondary btn-sm border-0 pr-2 mr-2" data-toggle="tooltip" data-placement="bottom" v-bind:title="$Lang.editTask" v-on:click="setRework"> {{ $Lang.rework }} </button>
+                    
+                    <div class="dropdown pr-2 mr-2" v-if="customStatuses.length != 0">
+                        <button class="btn btn-outline-secondary dropdown-toggle btn-sm border-0 info-but-size" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ $Lang.changeToCustomStatus }} {{ customStatuses.length != 0 }}
+                        </button>
+                        <div class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton">
+                            <a v-for="(item,key) in customStatuses" :key="item,key" class="dropdown-item" href="#">{{ item }}</a>
+                        </div>
+                    </div>
 
                     <button class="btn btn-outline-secondary btn-sm border-0 pr-2 mr-2" data-toggle="tooltip" data-placement="bottom" v-bind:title="$Lang.editTask" @click="activeMenuItem = 'taskEditView'"> {{ $Lang.editTask }} <font-awesome-icon icon="pen" /></button>
                     <button class="btn btn-outline-secondary btn-sm border-0 pr-2" data-toggle="tooltip" data-placement="bottom" v-bind:title="$Lang.deleteTask" v-on:click="setTrash">{{ $Lang.deleteTask }} <font-awesome-icon icon="trash" /></button>
@@ -125,6 +134,11 @@ export default {
                     "days": currentDays
                 }
             }
+        },
+        hasCustomStatus:{
+            get: function(){
+                return this.currentTask.customStatus !== undefined && this.currentTask.customStatus !== 'undefined' 
+            }
         }
     }
 }
@@ -132,5 +146,8 @@ export default {
 <style>
 code{
     color: #e83e8c !important;
+}
+.dropdown{
+    display: inline-block !important;
 }
 </style>

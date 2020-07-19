@@ -13,6 +13,7 @@
     "darkTheme": "Set Dark",
     "themeTumbler":"Switch theme",
     "theme":"Theme",
+    "customStatuses": "Custom statuses",
     "export":{
         "label":"Export tasks",
         "button":"Export"
@@ -45,6 +46,7 @@
         "do":"Do",
         "archiv":"Archive"
     },
+    "changeToCustomStatus": "Change to",
     "priority":{
         "priority":"Priority",
         "hight":"Hight",

@@ -1,7 +1,8 @@
 /*eslint-disable */
 var settings = {
     "bgStyle": "bg-light",
-    "lang":"en"
+    "lang":"en",
+    "statuses":[]
 }
 var utils = {
     installPrompt: () => {
@@ -30,6 +31,10 @@ var utils = {
         //Set default tasks
         if ((localStorage.tasks === undefined) || (localStorage.tasks === 'undefined')) {
             localStorage.tasks = JSON.stringify({})
+        }
+        //Set default custom statuses
+        if ((localStorage.customStatuses === undefined) || (localStorage.customStatuses === 'undefined') || (localStorage.customStatuses === "")) {
+            localStorage.customStatuses = JSON.stringify(settings.statuses)
         }
         //Set default dropBox mode
         if ((localStorage.dropBoxMode === undefined) || (localStorage.dropBoxMode === 'undefined')) {
@@ -67,11 +72,13 @@ var utils = {
     getSettings: () => {
         settings.bgStyle = localStorage.bgStyle
         settings.lang = localStorage.lang
+        settings.statuses = JSON.parse(localStorage.customStatuses)
         return settings
     },
-    setSettings: (settings) => {
-        localStorage.bgStyle = settings.bgStyle
-        localStorage.lang = settings.lang
+    setSettings: (setting) => {
+        localStorage.bgStyle = setting.bgStyle
+        localStorage.lang = setting.lang
+        localStorage.customStatuses = JSON.stringify(setting.statuses)
     }
 }
 export default utils
