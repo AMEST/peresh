@@ -28,7 +28,7 @@
             <div class="col">{{ $Lang.endDate }}:  <span class="float-right">{{ getExpiry() }}</span></div>
         </div>
         <div class="row mt-2">
-            <div class="col"> {{ $Lang.progress }}: </div>
+            <div class="col"> {{ $Lang.estimation }}: </div>
         </div>
         <div class="row mt-2">
             <div class="col"> 

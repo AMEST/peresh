@@ -53,7 +53,7 @@
     },
     "creationDate":"Creation Date",
     "endDate":"End Date",
-    "progress": "Remaining time",
+    "estimation": "Remaining time",
     "summary":"Summary",
     "title":"Task name",
     "tasksListNone":"Task list is empty, create a task",
