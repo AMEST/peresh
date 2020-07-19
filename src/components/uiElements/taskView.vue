@@ -12,10 +12,10 @@
                     
                     <div class="dropdown pr-2 mr-2" v-if="customStatuses.length != 0">
                         <button class="btn btn-outline-secondary dropdown-toggle btn-sm border-0 info-but-size" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ $Lang.changeToCustomStatus }} {{ customStatuses.length != 0 }}
+                            {{ $Lang.changeToCustomStatus }}
                         </button>
                         <div class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton">
-                            <a v-for="(item,key) in customStatuses" :key="item,key" class="dropdown-item" href="#">{{ item }}</a>
+                            <a v-for="(item,key) in customStatuses" :key="item,key" class="dropdown-item" href="#" @click="setCustomStatus(item)">{{ item }}</a>
                         </div>
                     </div>
 
@@ -27,8 +27,10 @@
         <!--end-->
         <div class="row mt-3">
             <div v-if="currentTask.priority" class="col">{{ $Lang.priority.priority }}: <span class="float-right badge" v-bind:class="priorityColor">{{ $Lang.priority[currentTask.priority] }}</span></div>
+            
             <div v-if="currentTask.status" class="col">{{ $Lang.status.status }}: 
-                <span v-if="currentTask.status == 'do'" class="float-right badge badge-secondary">{{ $Lang.status[currentTask.status] }}</span>
+                <span v-if="currentTask.customStatus && currentTask.status == 'do'" class="float-right badge badge-warning">{{ currentTask.customStatus }}</span>
+                <span v-else-if="currentTask.status == 'do'" class="float-right badge badge-secondary">{{ $Lang.status[currentTask.status] }}</span>
                 <span v-else class="float-right badge badge-success">{{ $Lang.status[currentTask.status] }}</span>
             </div>
         </div>
@@ -68,6 +70,16 @@ export default {
         },        
         getExpiry: function(){
             return new Date(parseInt(this.currentTask.expiry)).toLocaleTimeString() + " " + new Date(parseInt(this.currentTask.expiry)).toLocaleDateString();
+        },
+        setCustomStatus: function(status){
+            var self = this;
+            var allTasks = JSON.parse(self.getTasks());
+            self.currentTask.customStatus = status
+            allTasks[self.currentTask.id] = self.currentTask
+            localStorage.tasks = JSON.stringify(allTasks)
+            self.$forceUpdate()
+            self.uploadToDropBox()
+            self.showMessage("Set cutom status: "+status)
         },
         setArchived: function(){
             var self = this;
