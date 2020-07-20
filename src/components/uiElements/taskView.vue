@@ -44,7 +44,7 @@
         <div class="row mt-2">
             <div class="col"> 
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" v-bind:class="[taskProgress.bg]" v-bind:style="[taskProgress.style]"> {{ taskProgress.days }} {{$Lang.days}}</div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" v-bind:class="[taskEstimation.bg]" v-bind:style="[taskEstimation.style]"> {{ taskEstimation.days }} {{$Lang.days}}</div>
                 </div>
             </div>
         </div>
@@ -128,7 +128,7 @@ export default {
                 }
             }
         },
-        taskProgress:{
+        taskEstimation:{
             get: function() {
                 var max = new Date(parseInt(this.currentTask.expiry)) - new Date(parseInt(this.currentTask.created))
                 var current = new Date(parseInt(this.currentTask.expiry)) - new Date()
