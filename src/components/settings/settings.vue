@@ -10,6 +10,10 @@
             <div class="col-8"><lang-button/></div>
         </div>
         <div class="row mb-3">
+            <div class="col-4"> {{ $Lang.customStatuses}}</div>
+            <div class="col-8"><custom-status/></div>
+        </div>
+        <div class="row mb-3">
             <div class="col-4"> {{ $Lang.export.label}}</div>
             <div class="col-8"><button class="btn btn-outline-danger border-0" type="button" v-on:click="exportTasks">{{ $Lang.export.button }}</button></div>
         </div>
@@ -29,14 +33,16 @@
     </div>
 </template>
 <script>
-import langButton from './langButton.vue'
-import themeChangeButton from './themeChangeButton.vue'
+import langButton from '../settings/langButton.vue'
+import themeChangeButton from '../settings/themeChangeButton.vue'
+import customStatus from '../settings/customStatus.vue'
 
 export default {
   name: "settings",
   components:{
       langButton,
-      themeChangeButton
+      themeChangeButton,
+      customStatus
   },
   methods:{
       exportTasks: function () {

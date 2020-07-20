@@ -13,6 +13,7 @@
     "darkTheme": "Set Dark",
     "themeTumbler":"Switch theme",
     "theme":"Theme",
+    "customStatuses": "Custom statuses",
     "export":{
         "label":"Export tasks",
         "button":"Export"
@@ -45,6 +46,7 @@
         "do":"Do",
         "archiv":"Archive"
     },
+    "changeToCustomStatus": "Change to",
     "priority":{
         "priority":"Priority",
         "hight":"Hight",
@@ -53,6 +55,7 @@
     },
     "creationDate":"Creation Date",
     "endDate":"End Date",
+    "estimation": "Remaining time",
     "summary":"Summary",
     "title":"Task name",
     "tasksListNone":"Task list is empty, create a task",
@@ -68,5 +71,6 @@
         "import":"Import successfully completed",
         "export":"Task export complited",
         "restored":"Task Restored"
-    }
+    },
+    "days":"d."
 }

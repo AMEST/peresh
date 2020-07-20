@@ -14,13 +14,17 @@
 export default {
   name: "langButton",
   methods:{
-      changeRus:()=>{
-          localStorage.lang = "ru";
-          location.reload();
+      changeRus(){
+          var self = this
+          localStorage.lang = "ru"
+          self.uploadToDropBox(false)
+          location.reload()
       },
-      changeEng:()=>{
-          localStorage.lang = "en";
-          location.reload();
+      changeEng(){
+          var self = this
+          localStorage.lang = "en"
+          self.uploadToDropBox(false)
+          location.reload()
       }
   }
 };

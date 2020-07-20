@@ -70,6 +70,7 @@ export default {
             localStorage.tasks = JSON.stringify(allTasks)
             self.uploadToDropBox()
             self.showMessage(self.$Lang.push.created)
+            sessionStorage.currentTask = JSON.stringify(self.currentTask)
         },
         editTask: function(){
             var self = this;
@@ -100,6 +101,7 @@ export default {
             self.currentTask.summary = ""
             self.currentTask.priority = "medium"
             self.currentTask.status = "do"
+            delete self.currentTask.customStatus
             self.currentTask.created = new Date().getTime()
         }
     },
@@ -111,6 +113,7 @@ export default {
             self.currentTask.summary = ""
             self.currentTask.priority = "medium"
             self.currentTask.status = "do"
+            delete self.currentTask.customStatus
             self.currentTask.created = new Date().getTime()
             this.$forceUpdate()
           }
