@@ -49,5 +49,5 @@ docker stack deploy -c deploy.yml peresh
 
 ## For link Peresh to you own dropbox OAuth app
 `
-In main.js replace "client_id" inside "goAuthDropBox" function
+In src/dropbox.js replace "client_id" inside "dropboxClientId" variable and rebuild application or docker container
 `
