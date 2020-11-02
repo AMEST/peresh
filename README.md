@@ -1,3 +1,7 @@
+![CI](https://github.com/AMEST/peresh/workflows/CI/badge.svg?branch=master) 
+![hub.docker.com](https://img.shields.io/docker/pulls/eluki/peresh.svg) 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/amest/peresh)
+![GitHub](https://img.shields.io/github/license/amest/peresh)
 # Peresh   
 **Very simple task tracker**   
 **[Try Peresh](https://peresh.ml)**   
