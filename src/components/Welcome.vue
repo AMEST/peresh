@@ -6,9 +6,10 @@
         <button type="button" class="btn btn-info welcome-element-width" @click="$isAppStarted=true" v-on:click="welcomeMess">{{ $Lang.buttonGetStartedLocal }}</button><br>
         <small class="text-muted welcome-element-width">{{ $Lang.localProfileSmall }}</small>
         <h5>{{ $Lang.or }}</h5>
-        <button type="button" class="btn btn-info welcome-element-width" v-on:click="goAuthDropBox();welcomeMess()">{{ $Lang.buttonGetStartedDropBox }}</button><br>
+        <button type="button" class="btn btn-info welcome-element-width" v-on:click="goAuthDropBox();welcomeMess()">{{ $Lang.buttonGetStartedDropBox }} <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'dropbox' }"/></button><br>
         <small class="text-muted welcome-element-width">{{ $Lang.dropboxProfileSmall }}</small>
         <div v-bind:class="[ themeButtonClass ]">
+            <a class="text-muted" href="https://github.com/AMEST/peresh" style="padding-right: 5px;">Fork me on GitHub <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'github' }" /> </a>
             <langButton/>
             <themeChangeButton/>
         </div>

@@ -18,6 +18,9 @@
                                 <font-awesome-icon v-bind:icon="item.icon" /><span class="pl-1"> {{ item.text }}</span>
                             </a>
                         </div>
+                        <div align="center"> 
+                            <a class="text-muted" href="https://github.com/AMEST/peresh" >Fork me on GitHub <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'github' }" /> </a>
+                        </div>
                     </div>
                     <div class=" min-100vh col work-shadow pt-4 enable-scroll">
                         <div v-if="activeMenuItem == 'tasksList'"> <tasks-list v-bind:title="$Lang.menu.tasksList.text" v-bind:tasks="getActiveTasks()"/> </div>

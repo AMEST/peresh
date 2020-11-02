@@ -7,6 +7,7 @@ import langRu from './assets/lang_ru.json'
 import langEng from './assets/lang_en.json'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faRecycle, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync } from '@fortawesome/free-solid-svg-icons'
+import { faGithub, faDropbox } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import './registerServiceWorker'
 import dropboxClient from '@/dropbox'
@@ -41,7 +42,7 @@ if (dropboxClient.active()) {
   })
 }
 
-library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faRecycle, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync)
+library.add(faCoffee, faSun, faMoon, faCube, faPlus, faTrash, faRecycle, faArchive, faTasks, faCalendar, faCalendarAlt, faColumns, faPen, faBars, faSync, faGithub, faDropbox)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vue2TouchEvents)
 Vue.config.productionTip = false
