@@ -11,6 +11,9 @@
                                 <font-awesome-icon v-bind:icon="item.icon" /><span class="pl-1"> {{ item.text }}</span>
                             </a>
                         </div>
+                         <div align="center"> 
+                            <a class="text-muted" href="https://github.com/AMEST/peresh" >Fork me on GitHub <font-awesome-icon :icon="{ prefix: 'fab', iconName: 'github' }" /> </a>
+                        </div>
                     </div>
                     <div class="d-none d-sm-none d-md-none d-lg-block col w-25 inrow-menu pt-4 pr-0">
                         <div class="list-group">
