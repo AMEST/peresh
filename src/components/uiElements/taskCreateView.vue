@@ -108,6 +108,8 @@ export default {
             self.currentTask.status = "do"
             delete self.currentTask.customStatus
             self.currentTask.created = new Date().getTime()
+        }else{
+            self.date = new Date(self.currentTask.expiry)
         }
     },
     watch: { 
