@@ -25,7 +25,6 @@
         <div class="row mb-3">
             <div class="col-2 min-width-col"> {{ $Lang.summary }}</div>
             <div class="col-10">
-                <textarea hidden class="form-control" v-model="currentTask.summary" v-bind:placeholder="$Lang.summary+' Markdown works'" rows="7"></textarea>
                 <vue-simplemde v-model="currentTask.summary" ref="markdownEditor" />
             </div>
         </div>
@@ -93,6 +92,7 @@ export default {
             }
             return name;
         },
+        // eslint-disable-next-line
         endDateChanged: function(event){
             var self = this
             self.currentTask.expiry = new Date(self.date).getTime()
