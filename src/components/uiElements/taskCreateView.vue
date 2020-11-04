@@ -24,7 +24,10 @@
         </div>
         <div class="row mb-3">
             <div class="col-2 min-width-col"> {{ $Lang.summary }}</div>
-            <div class="col-10"><textarea class="form-control" v-model="currentTask.summary" v-bind:placeholder="$Lang.summary+' Markdown works'" rows="7"></textarea></div>
+            <div class="col-10">
+                <textarea hidden class="form-control" v-model="currentTask.summary" v-bind:placeholder="$Lang.summary+' Markdown works'" rows="7"></textarea>
+                <vue-simplemde v-model="currentTask.summary" ref="markdownEditor" />
+            </div>
         </div>
         <div class="row mb-3">
             <div class="col-2 min-width-col"></div>
@@ -43,6 +46,7 @@
 import dateTimePicker from 'vue-bootstrap-datetimepicker';
 // Import date picker css
 import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
+import VueSimplemde from 'vue-simplemde'
 export default {
     name:"taskCreateView",
     props: ["mode"],
@@ -56,7 +60,8 @@ export default {
       }
     },
     components:{
-        dateTimePicker
+        dateTimePicker,
+        VueSimplemde
     },
     methods:{
         createNewTask: function(){
@@ -122,10 +127,18 @@ export default {
 }
 </script>
 <style>
+@import '~simplemde/dist/simplemde.min.css';
 .min-width-col{
     min-width: 85px;
 }
 .pb-for-oneline{
     padding-bottom: 80px;
+}
+.editor-toolbar{
+    background-color: #f8f9fa;
+}
+.CodeMirror, .CodeMirror-scroll {
+  max-height: 330px !important;
+  min-height: 200px !important;
 }
 </style>
