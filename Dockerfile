@@ -2,6 +2,7 @@ FROM alpine/git as version
 WORKDIR /src
 COPY . /src
 RUN echo "{\"version\":\"$(git describe --tags 2>/dev/null)\"}" > /version.json;\
+    echo "{\"version\":\"$(git describe --tags 2>/dev/null)\"}";\
     cat /version.json;\
     ls -la
 
