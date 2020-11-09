@@ -69,6 +69,15 @@ var utils = {
             ? false 
             : localStorage.isAppStarted)
     },
+    loadVersion: function (callback) {
+        var request = new XMLHttpRequest()
+        request.open("GET", "/version.json")
+        request.onload = function () {
+            var response = JSON.parse(request.response)
+            callback(response)
+        }
+        request.send(null)
+    },
     getSettings: () => {
         settings.bgStyle = localStorage.bgStyle
         settings.lang = localStorage.lang

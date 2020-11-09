@@ -72,45 +72,41 @@ export default {
             return new Date(parseInt(this.currentTask.expiry)).toLocaleTimeString() + " " + new Date(parseInt(this.currentTask.expiry)).toLocaleDateString();
         },
         setCustomStatus: function(status){
-            var self = this;
-            var allTasks = JSON.parse(self.getTasks());
-            self.currentTask.customStatus = status
-            allTasks[self.currentTask.id] = self.currentTask
+            var allTasks = JSON.parse(this.getTasks());
+            this.currentTask.customStatus = status
+            allTasks[this.currentTask.id] = this.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
-            self.$forceUpdate()
-            self.uploadToDropBox()
-            self.showMessage("Set cutom status: "+status)
+            this.$forceUpdate()
+            this.uploadToDropBox()
+            this.showMessage("Set cutom status: "+status)
         },
         setArchived: function(){
-            var self = this;
-            var allTasks = JSON.parse(self.getTasks());
-            self.currentTask.status = "archiv"
-            allTasks[self.currentTask.id] = self.currentTask
+            var allTasks = JSON.parse(this.getTasks());
+            this.currentTask.status = "archiv"
+            allTasks[this.currentTask.id] = this.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
-            self.$forceUpdate()
-            self.uploadToDropBox()
-            self.showMessage(self.$Lang.push.archiv)
+            this.$forceUpdate()
+            this.uploadToDropBox()
+            this.showMessage(this.$Lang.push.archiv)
         },
         setRework: function(){
-            var self = this;
-            var allTasks = JSON.parse(self.getTasks());
-            self.currentTask.status = "do"
-            allTasks[self.currentTask.id] = self.currentTask
+            var allTasks = JSON.parse(this.getTasks());
+            this.currentTask.status = "do"
+            allTasks[this.currentTask.id] = this.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
-            self.$forceUpdate()
-            self.uploadToDropBox()
-            self.showMessage(self.$Lang.push.rework)
+            this.$forceUpdate()
+            this.uploadToDropBox()
+            this.showMessage(this.$Lang.push.rework)
         },
         setTrash: function(){
-            var self = this;
-            var allTasks = JSON.parse(self.getTasks());
-            self.currentTask.isDeleted = true
-            allTasks[self.currentTask.id] = self.currentTask
+            var allTasks = JSON.parse(this.getTasks());
+            this.currentTask.isDeleted = true
+            allTasks[this.currentTask.id] = this.currentTask
             localStorage.tasks = JSON.stringify(allTasks)
-            self.$forceUpdate()
-            self.uploadToDropBox()
-            self.showMessage(self.$Lang.push.trashed)
-            self.activeMenuItem = "trashCan"
+            this.$forceUpdate()
+            this.uploadToDropBox()
+            this.showMessage(this.$Lang.push.trashed)
+            this.activeMenuItem = "trashCan"
         }
     },
     computed:{
