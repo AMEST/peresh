@@ -2,7 +2,8 @@ FROM alpine/git as version
 WORKDIR /src
 COPY . /src
 RUN echo "{\"version\":\"$(git describe --tags 2>/dev/null)\"}" > /version.json;\
-    cat /version.json
+    cat /version.json;\
+    ls -la
 
 FROM node:10-alpine as build
 COPY . /build
