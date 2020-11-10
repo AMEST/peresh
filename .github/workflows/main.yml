@@ -23,6 +23,7 @@ jobs:
     steps:
         # Runs a single command using the runners shell
     - uses: actions/checkout@master
+    - run: git fetch --prune --unshallow
     - name: Build And Push Peresh
       uses: docker/build-push-action@v1.1.0
       with:

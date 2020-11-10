@@ -3,7 +3,6 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/amest/peresh)
 ![GitHub](https://img.shields.io/github/license/amest/peresh)
 # Peresh   
-**Very simple task tracker**   
 **[Try Peresh](https://peresh.ml)**   
 **[Docker hub](https://hub.docker.com/r/eluki/peresh)**
 ## Description
@@ -11,43 +10,60 @@ Peresh - is the simple tracker for personal affairs. Task tracking and managment
 
 Peresh has 2 work mode:
 1. Local - all data save in browser
-1. Dropbox - auth in your Dropbox account and auto sync all data with local data (in browser) and data in dropbox **(only on rebuild with change dropbox clientId)**
+1. Dropbox - auth in your Dropbox account and auto sync all data with local data (in browser) and data in dropbox
 
 Implemented features:
-1) Create, delete tasks
-2) Transfer to different statuses
-3) Markdown markup of the task text
-4) Progress bar with color-coded time to completion date
-5) Custom statuses
-6) Integration with dropbox for storing tasks
-7) Two interface languages
+1. Create, delete, update tasks
+1. Transfer to different statuses
+1. Markdown markup of the task summary
+1. Progress bar with color-coded time to completion date
+1. Custom statuses
+1. Integration with dropbox for storing tasks
+1. Two interface languages
+1. Light/Dark theme
+1. Export/Import `tasks.json`
+
 
 ## Usage
-### Run build
+### Build
 ```
 docker build -t peresh .
 ``` 
-### Run build & launch docker image
+### Launch docker image
 #### Docker cli: 
-```
-docker run -d -p 8080:80 eluki/peresh:latest
+```bash
+docker run -d \
+           -p 8080:80 \
+           -e DropBoxClientId=[ClientId] \
+           --restart always \
+           --name peresh \
+           eluki/peresh:latest
 ```
 #### Docker-compose / Swarm Stack   
-```
-version: '3.7'
+```yml
+version: '3.8'
 
 services:
   web:
     image: eluki/peresh:latest
+    environment:
+      - "DropBoxClientId=[ClientId]"
     ports:
      - 8080:80
-```
-and cli command:
-```
-docker stack deploy -c deploy.yml peresh
+      restart_policy:
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 25M
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: on-failure
 ```
 
-## For link Peresh to you own dropbox OAuth app
-`
-In src/dropbox.js replace "client_id" inside "dropboxClientId" variable and rebuild application or docker container
-`
+and cli command:
+
+```bash
+docker stack deploy -c deploy.yml peresh
+```

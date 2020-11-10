@@ -13,8 +13,8 @@ import './registerServiceWorker'
 import dropboxClient from '@/dropbox'
 import utils from '@/utils'
 
-const issuesFileName = "issues.json"
-const settingsFileName = "settings.json"
+const issuesFileName = 'issues.json'
+const settingsFileName = 'settings.json'
 /*
 *
 * Configuration init
@@ -29,7 +29,6 @@ if (params.access_token !== undefined) {
 }
 utils.installPrompt()
 utils.useDefaults()
-
 if (dropboxClient.active()) {
   dropboxClient.download(settingsFileName, (response) => {
     var settings = JSON.parse(response)
@@ -72,41 +71,40 @@ let globalData = new Vue({
 /* eslint-enable */
 Vue.mixin({
   methods: {
-    uploadToDropBox(async = true) {
+    uploadToDropBox (async = true) {
       if (dropboxClient.active()) {
         dropboxClient.upload(issuesFileName, window.localStorage.tasks, () => this.syncWithDropBox(), async)
         dropboxClient.upload(settingsFileName, JSON.stringify(utils.getSettings()), () => this.syncWithDropBox, async)
       }
     },
-    goAuthDropBox() {
+    goAuthDropBox () {
       dropboxClient.redirectToAuth()
     },
-    getTasks() {
-
+    getTasks () {
       if (this.checkSleepTime()) {
         this.syncWithDropBox()
       }
       return window.localStorage.tasks
     },
-    syncWithDropBox() {
+    syncWithDropBox () {
       if (dropboxClient.active()) {
-        var selfThis = this
+        var self = this
         dropboxClient.download(issuesFileName, (response) => {
           window.localStorage.tasks = response
-          selfThis.$isSynchronize = false
+          self.$isSynchronize = false
           window.sessionStorage.syncTime = new Date().getTime()
         })
         dropboxClient.download(settingsFileName, (response) => {
           var settings = JSON.parse(response)
           utils.setSettings(settings)
-          selfThis.$isSynchronize = false
+          self.$isSynchronize = false
           window.sessionStorage.syncTime = new Date().getTime()
         })
         this.$isSynchronize = true
       }
     },
-    checkSleepTime() {
-      var oldTime = (window.sessionStorage.syncTime == undefined) ? new Date().getTime() : parseInt(window.sessionStorage.syncTime)
+    checkSleepTime () {
+      var oldTime = (window.sessionStorage.syncTime === undefined) ? new Date().getTime() : parseInt(window.sessionStorage.syncTime)
       var curTime = new Date().getTime()
       if ((curTime - oldTime) < 5000) {
         return false
@@ -115,7 +113,7 @@ Vue.mixin({
         return true
       }
     },
-    showMessage(message) {
+    showMessage (message) {
       utils.showNotification(message)
     }
   },
@@ -149,7 +147,7 @@ Vue.mixin({
     },
     $isDropBoxMode: {
       get: function () { return globalData.$data.$isDropBoxMode },
-      set: function (newValue) { globalData.$data.$isDropBoxMode = newValue; window.localStorage.dropBoxMode = (newValue) ? "enable" : "disable" }
+      set: function (newValue) { globalData.$data.$isDropBoxMode = newValue; window.localStorage.dropBoxMode = (newValue) ? 'enable' : 'disable' }
     },
     $isSynchronize: {
       get: function () { return globalData.$data.$isSync },
