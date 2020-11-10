@@ -50,7 +50,6 @@ services:
       - "DropBoxClientId=[ClientId]"
     ports:
      - 8080:80
-      restart_policy:
     deploy:
       replicas: 1
       resources:
