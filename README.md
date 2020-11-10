@@ -3,7 +3,6 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/amest/peresh)
 ![GitHub](https://img.shields.io/github/license/amest/peresh)
 # Peresh   
-**Very simple task tracker**   
 **[Try Peresh](https://peresh.ml)**   
 **[Docker hub](https://hub.docker.com/r/eluki/peresh)**
 ## Description
