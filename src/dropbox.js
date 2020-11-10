@@ -1,5 +1,4 @@
 /*eslint-disable */
-var dropboxClientId = "3pap37yp0kr2bei"
 
 var dropboxClient = {
     isEnabled: () => {
@@ -9,10 +8,15 @@ var dropboxClient = {
         return ((localStorage.dropBoxToken !== undefined) || (localStorage.dropBoxToken !== 'undefined')) && dropboxClient.isEnabled()
     },
     redirectToAuth: () => {
-        var redirectUrl = window.location.protocol + "//" + window.location.host
-        var client_id = dropboxClientId
-        var authUrl = "https://www.dropbox.com/oauth2/authorize?client_id=" + client_id + "&response_type=token&redirect_uri=" + redirectUrl
-        window.location = authUrl
+        var request = new XMLHttpRequest()
+        request.open("GET", "/dropbox.settings.json")
+        request.onload = function () {
+            var response = JSON.parse(request.response)
+            var redirectUrl = window.location.protocol + "//" + window.location.host
+            var authUrl = "https://www.dropbox.com/oauth2/authorize?client_id=" + response.clientId + "&response_type=token&redirect_uri=" + redirectUrl
+            window.location = authUrl
+        }
+        request.send(null)
     },
     auth: (token, async = true) => {
         localStorage.dropBoxToken = token
