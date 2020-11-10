@@ -7,10 +7,9 @@ server {
         index  index.html index.htm;
     }
 
-    location ~ ^/dropbox.settings.json$ {
+    location /dropbox.settings.json {
         add_header Content-Type application/json;
-        set_by_lua $dropboxClientId 'return os.getenv("DropBoxClientId")';
-        return 200 '{"clientId":"$dropboxClientId"}';
+        return 200 '{"clientId":"${DropBoxClientId}"}';
     }
 
     #error_page  404              /404.html;
