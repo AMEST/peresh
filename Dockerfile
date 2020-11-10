@@ -9,7 +9,8 @@ WORKDIR /build
 RUN npm install;\
     npm run build
 
-FROM nginx:1.17-alpine
+FROM nginx:1.19
+RUN apt update && apt install -y nginx-extras && rm -rf /var/cache/apt
 ENV DropBoxClientId=''
 COPY --from=build /build/dist /usr/share/nginx/html
 COPY --from=version /version.json /usr/share/nginx/html
