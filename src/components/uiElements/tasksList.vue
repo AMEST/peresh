@@ -22,13 +22,16 @@
         :key="item,key"
         v-bind:id="item.id"
         class="list-group-item d-flex justify-content-between align-items-center"
-        v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item bg-dark': 'light-item']"
+        v-bind:class="[ $bgStyle == 'bg-dark'? 'dark-item bg-dark': 'light-item', taskEstimation(item).bg]"
       >
         <span
           class="pointer roundedTitle"
           v-if="activeMenuItem != 'trashCan'"
           @click="currentTask = item, activeMenuItem = 'taskView'"
-        >{{ item.title }}</span>
+        >
+          <font-awesome-icon :class="[item.priority]" icon="circle" />
+          {{ item.title }}
+        </span>
         <span v-else>{{ item.title }}</span>
         <div>
           <button
@@ -106,6 +109,28 @@ export default {
       this.activeMenuItem = ami;
       this.$forceUpdate();
       this.uploadToDropBox();
+    },
+    taskEstimation: function(task) {
+      var max =
+        new Date(parseInt(task.expiry)) -
+        new Date(parseInt(task.created));
+      var current = new Date(parseInt(task.expiry)) - new Date();
+      var currentPercent = Math.abs(100 - (current * 100) / max);
+      var currentDays = Math.round(current / 1000 / 60 / 60 / 24);
+      var background =
+        currentPercent < 35
+          ? "estimation-color-normal"
+          : currentPercent < 70
+          ? "estimation-color-warn"
+          : "estimation-color-danger";
+      background = task.status === "archiv" ? "estimation-color-fine" : background;
+      return {
+        style: {
+          width: currentPercent + "%"
+        },
+        bg: background,
+        days: currentDays
+      };
     }
   }
 };
@@ -122,5 +147,30 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 75%;
+}
+.low {
+  color: #6c757d;
+}
+.medium {
+  color: #ffc107;
+}
+.hight {
+  color: #dc3545;
+}
+.estimation-color-normal{
+  border-left-color:#17a2b8!important;
+  border-right-color:#17a2b8!important;
+}
+.estimation-color-warn{
+  border-left-color:#ffc107!important;
+  border-right-color:#ffc107!important;
+}
+.estimation-color-danger{
+  border-left-color:#dc3545!important;
+  border-right-color:#dc3545!important;
+}
+.estimation-color-fine{
+  border-left-color:#28a745!important;
+  border-right-color:#28a745!important;
 }
 </style>

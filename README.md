@@ -23,7 +23,14 @@ Implemented features:
 1. Light/Dark theme
 1. Export/Import `tasks.json`
 
-
+## ScreenShots
+![Welcome](https://i.postimg.cc/gkYy3XXb/2020-11-27-23-08-53-localhost-e4238fe63951.png)
+![Main](https://i.postimg.cc/SxRWtBfZ/2020-11-27-23-09-15-localhost-a170e70a62ae.png)
+![Task Create](https://i.postimg.cc/j5HN7tRj/2020-11-27-23-12-04-localhost-2ada7ff1ae7c.png)
+![Task View](https://i.postimg.cc/pTbzrpb7/2020-11-27-23-12-37-localhost-3a516f1ff671.png)
+![Settings](https://i.postimg.cc/x1ZKr6s9/2020-11-27-23-09-48-localhost-2349c0cec5df.png)
+![Settings](https://i.postimg.cc/W4J0s0Kg/2020-11-27-23-12-43-localhost-b67c24d9e361.png
+)
 ## Usage
 ### Build
 ```
