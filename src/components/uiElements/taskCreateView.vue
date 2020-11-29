@@ -186,6 +186,7 @@ export default {
         this.currentTask.priority = "medium";
         this.currentTask.status = "do";
         delete this.currentTask.customStatus;
+        delete this.currentTask.todo;
         this.currentTask.created = new Date().getTime();
         this.$forceUpdate();
       }
