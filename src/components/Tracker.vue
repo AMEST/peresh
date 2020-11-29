@@ -7,7 +7,7 @@
       v-touch:swipe.left="swipeLeft"
     >
       <div v-if="$isSynchronize" class="sync">
-        <font-awesome-icon icon="sync" />
+        <font-awesome-icon icon="sync" spin/>
         {{ $Lang.sync }}
       </div>
       <div class="container-fluid h-100 mx-auto max-fluid-container-width">
