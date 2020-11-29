@@ -57,6 +57,8 @@
     "endDate":"End Date",
     "estimation": "Remaining time",
     "summary":"Summary",
+    "todo":"To do list",
+    "addItem":"Add item",
     "title":"Task name",
     "tasksListNone":"Task list is empty, create a task",
     "trashClean":"Recycle bin empty",

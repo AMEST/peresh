@@ -2,9 +2,10 @@
   <div class="container pb-for-oneline">
     <h4 v-if="mode == 'create'" class="text-center mb-4">{{ $Lang.createTask }}</h4>
     <h4 v-else class="text-center mb-4">{{ $Lang.editTask }}</h4>
+    <!--Titile-->
     <div class="row mb-3">
-      <div class="col-2 min-width-col">{{ $Lang.title }}</div>
-      <div class="col-10">
+      <div class="col-lg-10 min-width-col">{{ $Lang.title }}</div>
+      <div class="col-lg-12">
         <input
           class="form-control"
           type="text"
@@ -13,9 +14,10 @@
         />
       </div>
     </div>
+    <!--Priority-->
     <div class="row mb-3">
-      <div class="col-2 min-width-col">{{ $Lang.priority.priority }}</div>
-      <div class="col-10">
+      <div class="col-lg-10 min-width-col">{{ $Lang.priority.priority }}</div>
+      <div class="col-lg-12">
         <select class="form-control" v-model="currentTask.priority">
           <option selected>low</option>
           <option>medium</option>
@@ -23,21 +25,55 @@
         </select>
       </div>
     </div>
+    <!--End date-->
     <div class="row mb-3">
-      <div class="col-2 min-width-col">{{ $Lang.endDate }}</div>
-      <div class="col-10">
+      <div class="col-lg-10 min-width-col">{{ $Lang.endDate }}</div>
+      <div class="col-lg-12">
         <date-time-picker v-model="date" :config="options" @dp-change="endDateChanged"></date-time-picker>
       </div>
     </div>
+    <!--Todo-->
     <div class="row mb-3">
-      <div class="col-2 min-width-col">{{ $Lang.summary }}</div>
-      <div class="col-10">
+      <div class="col-lg-10 min-width-col">{{ $Lang.todo }}</div>
+      <div class="col-lg-12">
+
+        <div class="input-group mb-3" v-for="(item,key) in currentTask.todo" :key="key">
+          <div class="input-group-prepend">
+            <div class="input-group-text todo-style">
+              <input type="checkbox" v-model="item.state">
+            </div>
+          </div>
+          <input type="text" class="form-control todo-style"  v-model="item.text">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary todo-style" type="button" @click="removeTodo(key)">
+              <font-awesome-icon icon="trash" />
+            </button>
+          </div>
+        </div>
+
+        <button
+          class="btn btn-outline-secondary btn-sm border-0 pr-2"
+          data-toggle="tooltip"
+          data-placement="bottom"
+          @click="addTodo()"
+        >
+          <font-awesome-icon icon="plus" />
+          {{$Lang.addItem}}
+        </button>
+
+      </div>
+    </div>
+    <!--Summary-->
+    <div class="row mb-3">
+      <div class="col-lg-10 min-width-col">{{ $Lang.summary }}</div>
+      <div class="col-lg-12">
         <vue-simplemde v-model="currentTask.summary" ref="markdownEditor" />
       </div>
     </div>
+    <!--Save buttons-->
     <div class="row mb-3">
-      <div class="col-2 min-width-col"></div>
-      <div class="col-10">
+      <div class="col-lg-10 min-width-col"></div>
+      <div class="col-lg-12">
         <div align="right">
           <button
             v-if="mode == 'create'"
@@ -113,6 +149,19 @@ export default {
     endDateChanged: function(event) {
       this.currentTask.expiry = new Date(this.date).getTime();
       this.$forceUpdate();
+    },
+    addTodo: function(){
+      if(!this.currentTask.todo){
+        this.currentTask.todo = [{"text":"","state":false}]
+        this.$forceUpdate();
+        return
+      }
+      this.currentTask.todo.push({"text":"","state":false})
+      this.$forceUpdate();
+    },
+    removeTodo: function(id){
+      this.currentTask.todo.splice(id, 1);
+      this.$forceUpdate();
     }
   },
   created: function() {
@@ -146,7 +195,7 @@ export default {
 <style>
 @import "~simplemde/dist/simplemde.min.css";
 .min-width-col {
-  min-width: 85px;
+  min-width: 120px;
 }
 .pb-for-oneline {
   padding-bottom: 80px;
@@ -158,5 +207,10 @@ export default {
 .CodeMirror-scroll {
   max-height: 330px !important;
   min-height: 200px !important;
+}
+.todo-style {
+  background-color: transparent !important;
+  border-color: #6c757d !important;
+  color: #6c757d !important;
 }
 </style>
