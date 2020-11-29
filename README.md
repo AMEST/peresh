@@ -22,6 +22,7 @@ Implemented features:
 1. Two interface languages
 1. Light/Dark theme
 1. Export/Import `tasks.json`
+1. To do list
 
 ## Screenshots
 ||||

@@ -68,6 +68,7 @@
       </div>
     </div>
     <!--end-->
+    <!--Priority and status-->
     <div class="row mt-3">
       <div v-if="currentTask.priority" class="col">
         {{ $Lang.priority.priority }}:
@@ -76,7 +77,6 @@
           v-bind:class="priorityColor"
         >{{ $Lang.priority[currentTask.priority] }}</span>
       </div>
-
       <div v-if="currentTask.status" class="col">
         {{ $Lang.status.status }}:
         <span
@@ -90,6 +90,7 @@
         <span v-else class="float-right badge badge-success">{{ $Lang.status[currentTask.status] }}</span>
       </div>
     </div>
+    <!--Start and End dates-->
     <div class="row mt-2">
       <div class="col">
         {{ $Lang.creationDate }}:
@@ -100,6 +101,7 @@
         <span class="float-right">{{ getExpiry() }}</span>
       </div>
     </div>
+    <!--Remaining bar-->
     <div class="row mt-2">
       <div class="col">{{ $Lang.estimation }}:</div>
     </div>
@@ -115,6 +117,25 @@
         </div>
       </div>
     </div>
+    <!--todo-->
+    <div class="row mt-2">
+      <div v-if="currentTask.todo" class="col">{{ $Lang.todo }}:</div>
+    </div>
+    <div class="row ml-3">
+      <div v-if="currentTask.todo" class="col mt-1">
+
+        <div class="input-group" v-for="(item,key) in currentTask.todo" :key="key">
+          <div class="input-group-prepend">
+            <div class="input-group-text todo-style">
+              <input type="checkbox" v-model="item.state" @change="todoChanged()">
+            </div>
+          </div>
+          <input type="text" class="form-control todo-style" v-model="item.text" readonly>
+        </div>
+
+      </div>
+    </div>
+    <!--Summary-->
     <div class="row mt-2">
       <div v-if="currentTask.summary" class="col">{{ $Lang.summary }}:</div>
     </div>
@@ -123,6 +144,7 @@
         <vue-markdown>{{ currentTask.summary }}</vue-markdown>
       </div>
     </div>
+    <!--end-->
     <div style="display: block;width: 10px;height: 24px;"></div>
   </div>
 </template>
@@ -133,57 +155,77 @@ export default {
   components: {
     VueMarkdown
   },
+  data: function(){
+    return {
+      todoUpdateTimer: null
+    }
+  },
   methods: {
     getCreated: function() {
       return (
         new Date(parseInt(this.currentTask.created)).toLocaleTimeString() +
         " " +
         new Date(parseInt(this.currentTask.created)).toLocaleDateString()
-      );
+      )
     },
     getExpiry: function() {
       return (
         new Date(parseInt(this.currentTask.expiry)).toLocaleTimeString() +
         " " +
         new Date(parseInt(this.currentTask.expiry)).toLocaleDateString()
-      );
+      )
     },
     setCustomStatus: function(status) {
-      var allTasks = JSON.parse(this.getTasks());
-      this.currentTask.customStatus = status;
-      allTasks[this.currentTask.id] = this.currentTask;
-      localStorage.tasks = JSON.stringify(allTasks);
-      this.$forceUpdate();
-      this.uploadToDropBox();
-      this.showMessage("Set cutom status: " + status);
+      var allTasks = JSON.parse(this.getTasks())
+      this.currentTask.customStatus = status
+      allTasks[this.currentTask.id] = this.currentTask
+      localStorage.tasks = JSON.stringify(allTasks)
+      this.$forceUpdate()
+      this.uploadToDropBox()
+      this.showMessage("Set cutom status: " + status)
     },
     setArchived: function() {
-      var allTasks = JSON.parse(this.getTasks());
-      this.currentTask.status = "archiv";
-      allTasks[this.currentTask.id] = this.currentTask;
-      localStorage.tasks = JSON.stringify(allTasks);
-      this.$forceUpdate();
-      this.uploadToDropBox();
-      this.showMessage(this.$Lang.push.archiv);
+      var allTasks = JSON.parse(this.getTasks())
+      this.currentTask.status = "archiv"
+      allTasks[this.currentTask.id] = this.currentTask
+      localStorage.tasks = JSON.stringify(allTasks)
+      this.$forceUpdate()
+      this.uploadToDropBox()
+      this.showMessage(this.$Lang.push.archiv)
     },
     setRework: function() {
-      var allTasks = JSON.parse(this.getTasks());
-      this.currentTask.status = "do";
-      allTasks[this.currentTask.id] = this.currentTask;
-      localStorage.tasks = JSON.stringify(allTasks);
-      this.$forceUpdate();
-      this.uploadToDropBox();
-      this.showMessage(this.$Lang.push.rework);
+      var allTasks = JSON.parse(this.getTasks())
+      this.currentTask.status = "do"
+      allTasks[this.currentTask.id] = this.currentTask
+      localStorage.tasks = JSON.stringify(allTasks)
+      this.$forceUpdate()
+      this.uploadToDropBox()
+      this.showMessage(this.$Lang.push.rework)
     },
     setTrash: function() {
-      var allTasks = JSON.parse(this.getTasks());
-      this.currentTask.isDeleted = true;
-      allTasks[this.currentTask.id] = this.currentTask;
-      localStorage.tasks = JSON.stringify(allTasks);
-      this.$forceUpdate();
-      this.uploadToDropBox();
-      this.showMessage(this.$Lang.push.trashed);
-      this.activeMenuItem = "trashCan";
+      var allTasks = JSON.parse(this.getTasks())
+      this.currentTask.isDeleted = true
+      allTasks[this.currentTask.id] = this.currentTask
+      localStorage.tasks = JSON.stringify(allTasks)
+      this.$forceUpdate()
+      this.uploadToDropBox()
+      this.showMessage(this.$Lang.push.trashed)
+      this.activeMenuItem = "trashCan"
+    },
+    todoChanged: function(){
+      var self = this
+      if(this.todoUpdateTimer != null)
+        clearTimeout(this.todoUpdateTimer)
+      this.todoUpdateTimer = setTimeout(function(){
+
+        var allTasks = JSON.parse(self.getTasks())
+        allTasks[self.currentTask.id] = self.currentTask
+        localStorage.tasks = JSON.stringify(allTasks)
+        self.$forceUpdate()
+        self.uploadToDropBox()
+        self.todoUpdateTimer = null
+
+      },1000)
     }
   },
   computed: {
@@ -243,5 +285,8 @@ code {
 }
 .dropdown {
   display: inline-block !important;
+}
+.table{
+  color: #6c757d!important;
 }
 </style>
