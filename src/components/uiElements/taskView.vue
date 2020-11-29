@@ -286,4 +286,7 @@ code {
 .dropdown {
   display: inline-block !important;
 }
+.table{
+  color: #6c757d!important;
+}
 </style>
